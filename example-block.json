@@ -1,0 +1,125 @@
+{
+  "id": "blk-2026-11",
+  "name": "Nov to Dec 2026: 5 Day Hypertrophy Block",
+  "startDate": "2026-11-16",
+  "weeks": [
+    { "n": 1, "rir": "3", "dropSets": false, "deload": false, "note": "" },
+    { "n": 2, "rir": "2", "dropSets": true, "deload": false, "note": "" },
+    { "n": 3, "rir": "2", "dropSets": true, "deload": false, "note": "" },
+    { "n": 4, "rir": "1", "dropSets": true, "deload": false, "note": "" },
+    { "n": 5, "rir": "0 to 1", "dropSets": true, "deload": false, "note": "Isolations can go to failure" },
+    { "n": 6, "rir": "4+", "dropSets": false, "deload": true, "note": "Deload: loads down 30 to 40%. Hold intake, do not cut." }
+  ],
+  "rules": [
+    "Superset key: A1 then A2 back to back, rest only after the second exercise. A letter on its own (A, D) is a straight set.",
+    "Double progression: once every set hits the top of the rep range at the week's target RIR, add the smallest increment next week.",
+    "Warm-up: 2 to 3 ramp sets before the first exercise (about 50% x 8, 70% x 5, 85% x 2 to 3). One feeder set for later exercises.",
+    "Friday: if Bootcamp has flattened you, cap everything at 2 RIR rather than skipping the session.",
+    "Wednesday is the longest session. If short of time, drop the hanging leg raises first.",
+    "Drop sets: final set only, reduce the load by 25 to 30% and continue to failure."
+  ],
+  "volumeTargets": {
+    "Chest": 16, "Back": 16, "Quads": 12, "Hamstrings": 10, "Glutes": 5, "Side delts": 10,
+    "Rear delts": 6, "Biceps": 6, "Triceps": 6, "Calves": 7, "Abs": 6
+  },
+  "keyLifts": ["Barbell Back Squat", "Romanian Deadlift", "Incline DB Press", "Chest Supported Row", "Seated DB Overhead Press", "Pull Ups / Chin Ups"],
+  "days": [
+    {
+      "dow": 1, "am": "6:30 Functional Training", "amCardio": true, "pm": "Chest & Back", "type": "weights",
+      "warmup": ["5 to 10 min light cardio", "Band pull aparts and dynamic chest stretches"],
+      "cooldown": ["Chest, lat and shoulder stretches"],
+      "exercises": [
+        { "group": "A1", "name": "Incline DB Press", "sets": 4, "repMin": 8, "repMax": 10, "cue": "Straight into A2, 2 to 3s lowering", "muscle": "Chest", "drop": false, "rest": 0 },
+        { "group": "A2", "name": "Chest Supported Row", "sets": 4, "repMin": 8, "repMax": 10, "cue": "Squeeze at the top, 90s rest after", "muscle": "Back", "drop": false, "rest": 90 },
+        { "group": "B1", "name": "Flat Machine Press", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Straight into B2, continuous tension", "muscle": "Chest", "drop": false, "rest": 0 },
+        { "group": "B2", "name": "Lat Pulldown", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Full stretch at the top, 60s rest after", "muscle": "Back", "drop": false, "rest": 60 },
+        { "group": "C1", "name": "Cable Flye", "sets": 3, "repMin": 12, "repMax": 15, "cue": "Straight into C2, drop set on final set (25 to 30% off)", "muscle": "Chest", "drop": true, "rest": 0 },
+        { "group": "C2", "name": "Cable Lateral Raise", "sets": 3, "repMin": 12, "repMax": 15, "cue": "Single arm, cable behind you, 60s rest after", "muscle": "Side delts", "drop": false, "rest": 60 }
+      ]
+    },
+    {
+      "dow": 2, "am": "", "amCardio": false, "pm": "Quads & Calves", "type": "weights",
+      "warmup": ["5 to 10 min treadmill incline walk", "Hip and ankle mobility drills"],
+      "cooldown": ["Lower body stretching"],
+      "exercises": [
+        { "group": "A", "name": "Barbell Back Squat", "sets": 4, "repMin": 6, "repMax": 8, "cue": "Straight sets, 2 to 3 min rest, ramp sets first", "muscle": "Quads", "drop": false, "rest": 150 },
+        { "group": "B1", "name": "Leg Press", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Straight into B2, full depth, no lockout", "muscle": "Quads", "drop": false, "rest": 0 },
+        { "group": "B2", "name": "Standing Calf Raise", "sets": 4, "repMin": 10, "repMax": 12, "cue": "2s pause at the bottom, 90s rest after", "muscle": "Calves", "drop": false, "rest": 90 },
+        { "group": "C1", "name": "Leg Extension", "sets": 3, "repMin": 12, "repMax": 15, "cue": "Straight into C2, drop set on final set", "muscle": "Quads", "drop": true, "rest": 0 },
+        { "group": "C2", "name": "Seated Leg Curl", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Lean forward slightly, 60s rest after", "muscle": "Hamstrings", "drop": false, "rest": 60 }
+      ]
+    },
+    {
+      "dow": 3, "am": "6:30 Functional Training", "amCardio": true, "pm": "Shoulders & Arms", "type": "weights",
+      "warmup": ["Arm circles and band pull aparts", "Light dumbbell shoulder rotations"],
+      "cooldown": ["Shoulder, biceps and triceps stretches"],
+      "exercises": [
+        { "group": "A1", "name": "Seated DB Overhead Press", "sets": 4, "repMin": 8, "repMax": 10, "cue": "Straight into A2, ribs down, no big arch", "muscle": "Front delts", "drop": false, "rest": 0 },
+        { "group": "A2", "name": "DB Lateral Raise", "sets": 4, "repMin": 12, "repMax": 15, "cue": "Lead with the elbows, 75s rest after", "muscle": "Side delts", "drop": false, "rest": 75 },
+        { "group": "B1", "name": "EZ Bar Curl", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Straight into B2, elbows pinned", "muscle": "Biceps", "drop": false, "rest": 0 },
+        { "group": "B2", "name": "Overhead Cable Triceps Ext", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Full stretch, 60s rest after", "muscle": "Triceps", "drop": false, "rest": 60 },
+        { "group": "C1", "name": "Cable Face Pull", "sets": 3, "repMin": 15, "repMax": 20, "cue": "Straight into C2, pull to forehead, rotate hands back", "muscle": "Rear delts", "drop": false, "rest": 0 },
+        { "group": "C2", "name": "Machine Lateral Raise", "sets": 3, "repMin": 12, "repMax": 15, "cue": "Drop set on final set, 60s rest after", "muscle": "Side delts", "drop": true, "rest": 60 },
+        { "group": "D", "name": "Hanging Leg Raise", "sets": 3, "repMin": 10, "repMax": 15, "cue": "Curl the pelvis up, no swinging, 60s rest", "muscle": "Abs", "drop": false, "rest": 60 }
+      ]
+    },
+    {
+      "dow": 4, "am": "Rest", "amCardio": false, "pm": "Rest Day", "type": "rest",
+      "warmup": ["Active rest"], "cooldown": ["Full body stretching"],
+      "notes": ["No lifting", "Light walking and mobility only", "Good day to check this week's loads against the progression rules"],
+      "checklist": ["Steps target hit", "Mobility done", "Loads reviewed"],
+      "exercises": []
+    },
+    {
+      "dow": 5, "am": "6:30 Bootcamp", "amCardio": true, "pm": "Upper Pump", "type": "weights",
+      "warmup": ["5 min light rowing", "Shoulder and lat mobility"],
+      "cooldown": ["Chest, back and arm stretches"],
+      "exercises": [
+        { "group": "A1", "name": "Weighted Dips", "sets": 3, "repMin": 8, "repMax": 10, "cue": "Straight into A2, slight forward lean", "muscle": "Chest", "drop": false, "rest": 0 },
+        { "group": "A2", "name": "Pull Ups / Chin Ups", "sets": 3, "repMin": 6, "repMax": 10, "cue": "Add weight or assistance to stay in range, 90s rest after", "muscle": "Back", "drop": false, "rest": 90 },
+        { "group": "B1", "name": "Incline DB Hammer Curl", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Straight into B2, full stretch at the bottom", "muscle": "Biceps", "drop": false, "rest": 0 },
+        { "group": "B2", "name": "Cable Triceps Pushdown", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Hard squeeze at lockout, 60s rest after", "muscle": "Triceps", "drop": false, "rest": 60 },
+        { "group": "C1", "name": "Pec Deck", "sets": 3, "repMin": 12, "repMax": 15, "cue": "Straight into C2, drop set on final set", "muscle": "Chest", "drop": true, "rest": 0 },
+        { "group": "C2", "name": "Reverse Pec Deck", "sets": 3, "repMin": 15, "repMax": 20, "cue": "Thumbs down, sweep wide, 60s rest after", "muscle": "Rear delts", "drop": false, "rest": 60 },
+        { "group": "D", "name": "Cable Crunch", "sets": 3, "repMin": 12, "repMax": 15, "cue": "Round the spine, no hip hinge, 60s rest", "muscle": "Abs", "drop": false, "rest": 60 }
+      ]
+    },
+    {
+      "dow": 6, "am": "", "amCardio": false, "pm": "Posterior Chain & Back", "type": "weights",
+      "warmup": ["5 to 10 min treadmill incline walk", "Hip hinge drills and glute activation"],
+      "cooldown": ["Hamstring, glute and lat stretches"],
+      "exercises": [
+        { "group": "A", "name": "Romanian Deadlift", "sets": 4, "repMin": 8, "repMax": 10, "cue": "Straight sets, 2 min rest, straps allowed", "muscle": "Hamstrings", "drop": false, "rest": 120 },
+        { "group": "B1", "name": "Hip Thrust (machine or BB)", "sets": 3, "repMin": 8, "repMax": 12, "cue": "Straight into B2, 1s hold at the top", "muscle": "Glutes", "drop": false, "rest": 0 },
+        { "group": "B2", "name": "Chest Supported T-Bar Row", "sets": 3, "repMin": 8, "repMax": 10, "cue": "Pull to the lower ribs, 90s rest after", "muscle": "Back", "drop": false, "rest": 90 },
+        { "group": "C1", "name": "Lying Leg Curl", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Straight into C2, 3s lowering", "muscle": "Hamstrings", "drop": false, "rest": 0 },
+        { "group": "C2", "name": "Neutral Grip Lat Pulldown", "sets": 3, "repMin": 10, "repMax": 12, "cue": "Full stretch at the top, 60s rest after", "muscle": "Back", "drop": false, "rest": 60 },
+        { "group": "D1", "name": "Bulgarian Split Squat", "sets": 2, "repMin": 10, "repMax": 12, "repNote": "each leg", "cue": "Straight into D2, slight forward lean", "muscle": "Quads", "muscle2": "Glutes", "drop": false, "rest": 0 },
+        { "group": "D2", "name": "Seated Calf Raise", "sets": 3, "repMin": 12, "repMax": 15, "cue": "Pause at peak contraction, 60s rest after", "muscle": "Calves", "drop": false, "rest": 60 }
+      ]
+    },
+    {
+      "dow": 7, "am": "Rest", "amCardio": false, "pm": "Rest", "type": "rest",
+      "warmup": [], "cooldown": [], "notes": ["Weekly check-in this evening. Use the weekly average weight, not single days."], "checklist": [], "exercises": []
+    }
+  ],
+  "nutrition": {
+    "kcal": 2070, "protein": 170, "carbs": 186, "fat": 63, "fibre": 28,
+    "weeklyTargetMin": 0.25, "weeklyTargetMax": 0.5, "reviewDays": 14, "stepsTarget": 10000,
+    "meals": [
+      { "time": "07:30", "name": "Breakfast", "note": "scrambled, then blended", "items": ["2 whole eggs, large", "3 egg whites, large", "30 g oats", "100 g frozen berries", "10 g almond butter"], "kcal": 410, "p": 28, "c": 30, "f": 18 },
+      { "time": "11:30", "name": "Lunch", "note": "largest plate of the day", "items": ["150 g chicken breast, cooked weight, air fryer", "60 g jasmine rice, dry weight", "150 g green vegetables", "10 g extra virgin olive oil"], "kcal": 575, "p": 53, "c": 50, "f": 15 },
+      { "time": "14:45", "name": "Pre workout", "note": "90 minutes before the first set", "items": ["55 g MFA powder", "85 g banana"], "kcal": 300, "p": 20, "c": 47, "f": 1 },
+      { "time": "17:45", "name": "Post workout", "note": "whole food recovery", "items": ["130 g 5% mince, cooked weight, wok", "200 g potatoes, cooked weight", "100 g green vegetables", "5 g extra virgin olive oil"], "kcal": 455, "p": 42, "c": 38, "f": 14 },
+      { "time": "20:15", "name": "Evening", "note": "slow protein before a 22:00 bed", "items": ["200 g Skyr", "100 g frozen berries", "15 g almond butter", "10 g dark chocolate, 85%"], "kcal": 330, "p": 27, "c": 21, "f": 15 }
+    ],
+    "notes": [
+      "Weighing: meat is cooked weight, rice is dry weight. Weigh nuts and nut butter rather than eyeballing them.",
+      "Creatine: one MFA serving gives roughly 1.8 g, under a maintenance dose. Start 5 g of standalone monohydrate once the tubs run out.",
+      "Salt: MFA carries 0.8 g at meal three. Keep added salt light elsewhere and hold the day to 5 g to 6 g.",
+      "Steps: 10,000 or more daily alongside this.",
+      "Still open: swap the lunch chicken for 130 g cooked salmon twice a week for omega 3. Consider vitamin D through autumn and winter.",
+      "If weight stalls past 14 days, trim 10 g to 15 g of carbohydrate from lunch first."
+    ]
+  }
+}
