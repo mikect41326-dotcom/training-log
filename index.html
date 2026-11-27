@@ -13,14 +13,14 @@
   color-scheme:dark;
   --bg:#141414; --surface-1:#1e1e1e; --surface-2:#262626; --line:#333;
   --text-primary:#efefef; --text-secondary:#9c9c9c;
-  --series-1:#338ced; --series-2:#e76624;
+  --series-1:#338ced; --series-2:#e76624; --series-3:#00a888;
   --good:#0aac23; --warn:#d28e05; --bad:#e5484d;
   --r:12px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text-primary);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
-header{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 14px 8px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+body{padding-bottom:calc(72px + max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px)))}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:max(10px, env(safe-area-inset-top, 0px), var(--safe-area-inset-top, 0px)) 14px 8px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
 header h1{font-size:17px;margin:0;flex:1}
 main{padding:12px;max-width:720px;margin:0 auto}
 h2{font-size:20px;margin:4px 0 8px}
@@ -30,6 +30,7 @@ a{color:var(--series-1)}
 .muted{color:var(--text-secondary)} .small{font-size:13px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
 .chip{background:var(--surface-2);border-radius:99px;padding:3px 10px;font-size:13px}
+button.chip.on{background:var(--series-1);border-color:var(--series-1)!important;color:#fff}
 .chip.warn{background:#4a3500;color:#ffd27a}
 .chip.good{background:#0d3b15;color:#8ef09c}
 .chip.bad{background:#4a1416;color:#ffb3b5}
@@ -112,12 +113,12 @@ td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 .rate button{flex:1;padding:8px 0}
 .rate button.on{background:var(--series-1);border-color:var(--series-1);color:#fff}
 /* nav */
-nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:#101010;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:#101010;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px))}
 nav a{color:var(--text-secondary);text-decoration:none;text-align:center;padding:9px 0 10px;font-size:12px}
 nav a .i{display:block;font-size:20px;line-height:1.1}
 nav a.on{color:var(--series-1)}
 /* rest timer */
-#timer{position:fixed;left:10px;right:10px;bottom:calc(66px + env(safe-area-inset-bottom));z-index:7;background:var(--series-1);color:#fff;border-radius:12px;padding:10px 12px;display:none;align-items:center;gap:10px;box-shadow:0 6px 20px #0008}
+#timer{position:fixed;left:10px;right:10px;bottom:calc(66px + max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px)));z-index:7;background:var(--series-1);color:#fff;border-radius:12px;padding:10px 12px;display:none;align-items:center;gap:10px;box-shadow:0 6px 20px #0008}
 #timer .t{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
 #timer .l{flex:1;font-size:13px}
 #timer button{background:#ffffff26;border-color:#ffffff40;color:#fff;padding:6px 10px}
@@ -127,6 +128,9 @@ nav a.on{color:var(--series-1)}
 #modal .sheet{background:var(--surface-1);width:100%;max-width:560px;border-radius:16px 16px 0 0;padding:16px;max-height:85vh;overflow:auto}
 details>summary{cursor:pointer;font-weight:600}
 ul.plain{margin:6px 0 0;padding-left:18px}
+.mrow{display:grid;grid-template-columns:1fr 84px 74px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.mrow input{text-align:center;font-size:16px;padding:10px 4px}
+.mchg{text-align:right;line-height:1.3}
 .edit-ex{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;background:var(--bg)}
 .edit-ex .grid4 label.f,.edit-ex .grid3 label.f{margin-bottom:6px}
 .chk{display:flex;align-items:center;gap:8px;margin:6px 0}
@@ -149,7 +153,14 @@ ul.plain{margin:6px 0 0;padding-left:18px}
 </nav>
 <script>
 "use strict";
-const SEED = {"id":"blk-2026-11","name":"Nov to Dec 2026: 5 Day Hypertrophy Block","startDate":"2026-11-16","weeks":[{"n":1,"rir":"3","dropSets":false,"deload":false,"note":""},{"n":2,"rir":"2","dropSets":true,"deload":false,"note":""},{"n":3,"rir":"2","dropSets":true,"deload":false,"note":""},{"n":4,"rir":"1","dropSets":true,"deload":false,"note":""},{"n":5,"rir":"0 to 1","dropSets":true,"deload":false,"note":"Isolations can go to failure"},{"n":6,"rir":"4+","dropSets":false,"deload":true,"note":"Deload: loads down 30 to 40%. Hold intake, do not cut."}],"rules":["Superset key: A1 then A2 back to back, rest only after the second exercise. A letter on its own (A, D) is a straight set.","Double progression: once every set hits the top of the rep range at the week's target RIR, add the smallest increment next week.","Warm-up: 2 to 3 ramp sets before the first exercise (about 50% x 8, 70% x 5, 85% x 2 to 3). One feeder set for later exercises.","Friday: if Bootcamp has flattened you, cap everything at 2 RIR rather than skipping the session.","Wednesday is the longest session. If short of time, drop the hanging leg raises first.","Drop sets: final set only, reduce the load by 25 to 30% and continue to failure."],"volumeTargets":{"Chest":16,"Back":16,"Quads":12,"Hamstrings":10,"Glutes":5,"Side delts":10,"Rear delts":6,"Biceps":6,"Triceps":6,"Calves":7,"Abs":6},"keyLifts":["Barbell Back Squat","Romanian Deadlift","Incline DB Press","Chest Supported Row","Seated DB Overhead Press","Pull Ups / Chin Ups"],"days":[{"dow":1,"am":"6:30 Functional Training","amCardio":true,"pm":"Chest & Back","type":"weights","warmup":["5 to 10 min light cardio","Band pull aparts and dynamic chest stretches"],"cooldown":["Chest, lat and shoulder stretches"],"exercises":[{"group":"A1","name":"Incline DB Press","sets":4,"repMin":8,"repMax":10,"cue":"Straight into A2, 2 to 3s lowering","muscle":"Chest","drop":false,"rest":0},{"group":"A2","name":"Chest Supported Row","sets":4,"repMin":8,"repMax":10,"cue":"Squeeze at the top, 90s rest after","muscle":"Back","drop":false,"rest":90},{"group":"B1","name":"Flat Machine Press","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, continuous tension","muscle":"Chest","drop":false,"rest":0},{"group":"B2","name":"Lat Pulldown","sets":3,"repMin":10,"repMax":12,"cue":"Full stretch at the top, 60s rest after","muscle":"Back","drop":false,"rest":60},{"group":"C1","name":"Cable Flye","sets":3,"repMin":12,"repMax":15,"cue":"Straight into C2, drop set on final set (25 to 30% off)","muscle":"Chest","drop":true,"rest":0},{"group":"C2","name":"Cable Lateral Raise","sets":3,"repMin":12,"repMax":15,"cue":"Single arm, cable behind you, 60s rest after","muscle":"Side delts","drop":false,"rest":60}]},{"dow":2,"am":"","amCardio":false,"pm":"Quads & Calves","type":"weights","warmup":["5 to 10 min treadmill incline walk","Hip and ankle mobility drills"],"cooldown":["Lower body stretching"],"exercises":[{"group":"A","name":"Barbell Back Squat","sets":4,"repMin":6,"repMax":8,"cue":"Straight sets, 2 to 3 min rest, ramp sets first","muscle":"Quads","drop":false,"rest":150},{"group":"B1","name":"Leg Press","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, full depth, no lockout","muscle":"Quads","drop":false,"rest":0},{"group":"B2","name":"Standing Calf Raise","sets":4,"repMin":10,"repMax":12,"cue":"2s pause at the bottom, 90s rest after","muscle":"Calves","drop":false,"rest":90},{"group":"C1","name":"Leg Extension","sets":3,"repMin":12,"repMax":15,"cue":"Straight into C2, drop set on final set","muscle":"Quads","drop":true,"rest":0},{"group":"C2","name":"Seated Leg Curl","sets":3,"repMin":10,"repMax":12,"cue":"Lean forward slightly, 60s rest after","muscle":"Hamstrings","drop":false,"rest":60}]},{"dow":3,"am":"6:30 Functional Training","amCardio":true,"pm":"Shoulders & Arms","type":"weights","warmup":["Arm circles and band pull aparts","Light dumbbell shoulder rotations"],"cooldown":["Shoulder, biceps and triceps stretches"],"exercises":[{"group":"A1","name":"Seated DB Overhead Press","sets":4,"repMin":8,"repMax":10,"cue":"Straight into A2, ribs down, no big arch","muscle":"Front delts","drop":false,"rest":0},{"group":"A2","name":"DB Lateral Raise","sets":4,"repMin":12,"repMax":15,"cue":"Lead with the elbows, 75s rest after","muscle":"Side delts","drop":false,"rest":75},{"group":"B1","name":"EZ Bar Curl","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, elbows pinned","muscle":"Biceps","drop":false,"rest":0},{"group":"B2","name":"Overhead Cable Triceps Ext","sets":3,"repMin":10,"repMax":12,"cue":"Full stretch, 60s rest after","muscle":"Triceps","drop":false,"rest":60},{"group":"C1","name":"Cable Face Pull","sets":3,"repMin":15,"repMax":20,"cue":"Straight into C2, pull to forehead, rotate hands back","muscle":"Rear delts","drop":false,"rest":0},{"group":"C2","name":"Machine Lateral Raise","sets":3,"repMin":12,"repMax":15,"cue":"Drop set on final set, 60s rest after","muscle":"Side delts","drop":true,"rest":60},{"group":"D","name":"Hanging Leg Raise","sets":3,"repMin":10,"repMax":15,"cue":"Curl the pelvis up, no swinging, 60s rest","muscle":"Abs","drop":false,"rest":60}]},{"dow":4,"am":"Rest","amCardio":false,"pm":"Rest Day","type":"rest","warmup":["Active rest"],"cooldown":["Full body stretching"],"notes":["No lifting","Light walking and mobility only","Good day to check this week's loads against the progression rules"],"checklist":["Steps target hit","Mobility done","Loads reviewed"],"exercises":[]},{"dow":5,"am":"6:30 Bootcamp","amCardio":true,"pm":"Upper Pump","type":"weights","warmup":["5 min light rowing","Shoulder and lat mobility"],"cooldown":["Chest, back and arm stretches"],"exercises":[{"group":"A1","name":"Weighted Dips","sets":3,"repMin":8,"repMax":10,"cue":"Straight into A2, slight forward lean","muscle":"Chest","drop":false,"rest":0},{"group":"A2","name":"Pull Ups / Chin Ups","sets":3,"repMin":6,"repMax":10,"cue":"Add weight or assistance to stay in range, 90s rest after","muscle":"Back","drop":false,"rest":90},{"group":"B1","name":"Incline DB Hammer Curl","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, full stretch at the bottom","muscle":"Biceps","drop":false,"rest":0},{"group":"B2","name":"Cable Triceps Pushdown","sets":3,"repMin":10,"repMax":12,"cue":"Hard squeeze at lockout, 60s rest after","muscle":"Triceps","drop":false,"rest":60},{"group":"C1","name":"Pec Deck","sets":3,"repMin":12,"repMax":15,"cue":"Straight into C2, drop set on final set","muscle":"Chest","drop":true,"rest":0},{"group":"C2","name":"Reverse Pec Deck","sets":3,"repMin":15,"repMax":20,"cue":"Thumbs down, sweep wide, 60s rest after","muscle":"Rear delts","drop":false,"rest":60},{"group":"D","name":"Cable Crunch","sets":3,"repMin":12,"repMax":15,"cue":"Round the spine, no hip hinge, 60s rest","muscle":"Abs","drop":false,"rest":60}]},{"dow":6,"am":"","amCardio":false,"pm":"Posterior Chain & Back","type":"weights","warmup":["5 to 10 min treadmill incline walk","Hip hinge drills and glute activation"],"cooldown":["Hamstring, glute and lat stretches"],"exercises":[{"group":"A","name":"Romanian Deadlift","sets":4,"repMin":8,"repMax":10,"cue":"Straight sets, 2 min rest, straps allowed","muscle":"Hamstrings","drop":false,"rest":120},{"group":"B1","name":"Hip Thrust (machine or BB)","sets":3,"repMin":8,"repMax":12,"cue":"Straight into B2, 1s hold at the top","muscle":"Glutes","drop":false,"rest":0},{"group":"B2","name":"Chest Supported T-Bar Row","sets":3,"repMin":8,"repMax":10,"cue":"Pull to the lower ribs, 90s rest after","muscle":"Back","drop":false,"rest":90},{"group":"C1","name":"Lying Leg Curl","sets":3,"repMin":10,"repMax":12,"cue":"Straight into C2, 3s lowering","muscle":"Hamstrings","drop":false,"rest":0},{"group":"C2","name":"Neutral Grip Lat Pulldown","sets":3,"repMin":10,"repMax":12,"cue":"Full stretch at the top, 60s rest after","muscle":"Back","drop":false,"rest":60},{"group":"D1","name":"Bulgarian Split Squat","sets":2,"repMin":10,"repMax":12,"repNote":"each leg","cue":"Straight into D2, slight forward lean","muscle":"Quads","muscle2":"Glutes","drop":false,"rest":0},{"group":"D2","name":"Seated Calf Raise","sets":3,"repMin":12,"repMax":15,"cue":"Pause at peak contraction, 60s rest after","muscle":"Calves","drop":false,"rest":60}]},{"dow":7,"am":"Rest","amCardio":false,"pm":"Rest","type":"rest","warmup":[],"cooldown":[],"notes":["Weekly check-in this evening. Use the weekly average weight, not single days."],"checklist":[],"exercises":[]}],"nutrition":{"kcal":2070,"protein":170,"carbs":186,"fat":63,"fibre":28,"weeklyTargetMin":0.25,"weeklyTargetMax":0.5,"reviewDays":14,"stepsTarget":10000,"meals":[{"time":"07:30","name":"Breakfast","note":"scrambled, then blended","items":["2 whole eggs, large","3 egg whites, large","30 g oats","100 g frozen berries","10 g almond butter"],"kcal":410,"p":28,"c":30,"f":18},{"time":"11:30","name":"Lunch","note":"largest plate of the day","items":["150 g chicken breast, cooked weight, air fryer","60 g jasmine rice, dry weight","150 g green vegetables","10 g extra virgin olive oil"],"kcal":575,"p":53,"c":50,"f":15},{"time":"14:45","name":"Pre workout","note":"90 minutes before the first set","items":["55 g MFA powder","85 g banana"],"kcal":300,"p":20,"c":47,"f":1},{"time":"17:45","name":"Post workout","note":"whole food recovery","items":["130 g 5% mince, cooked weight, wok","200 g potatoes, cooked weight","100 g green vegetables","5 g extra virgin olive oil"],"kcal":455,"p":42,"c":38,"f":14},{"time":"20:15","name":"Evening","note":"slow protein before a 22:00 bed","items":["200 g Skyr","100 g frozen berries","15 g almond butter","10 g dark chocolate, 85%"],"kcal":330,"p":27,"c":21,"f":15}],"notes":["Weighing: meat is cooked weight, rice is dry weight. Weigh nuts and nut butter rather than eyeballing them.","Creatine: one MFA serving gives roughly 1.8 g, under a maintenance dose. Start 5 g of standalone monohydrate once the tubs run out.","Salt: MFA carries 0.8 g at meal three. Keep added salt light elsewhere and hold the day to 5 g to 6 g.","Steps: 10,000 or more daily alongside this.","Still open: swap the lunch chicken for 130 g cooked salmon twice a week for omega 3. Consider vitamin D through autumn and winter.","If weight stalls past 14 days, trim 10 g to 15 g of carbohydrate from lunch first."]}};
+const SEED = {"id":"blk-2026-11","name":"Nov to Dec 2026: 5 Day Hypertrophy Block","startDate":"2026-11-16","weeks":[{"n":1,"rir":"3","dropSets":false,"deload":false,"note":""},{"n":2,"rir":"2","dropSets":true,"deload":false,"note":""},{"n":3,"rir":"2","dropSets":true,"deload":false,"note":""},{"n":4,"rir":"1","dropSets":true,"deload":false,"note":""},{"n":5,"rir":"0 to 1","dropSets":true,"deload":false,"note":"Isolations can go to failure"},{"n":6,"rir":"4+","dropSets":false,"deload":true,"note":"Deload: loads down 30 to 40%. Hold intake, do not cut."}],"rules":["Superset key: A1 then A2 back to back, rest only after the second exercise. A letter on its own (A, D) is a straight set.","Double progression: once every set hits the top of the rep range at the week's target RIR, add the smallest increment next week.","Warm-up: 2 to 3 ramp sets before the first exercise (about 50% x 8, 70% x 5, 85% x 2 to 3). One feeder set for later exercises.","Friday: if Bootcamp has flattened you, cap everything at 2 RIR rather than skipping the session.","Wednesday is the longest session. If short of time, drop the hanging leg raises first.","Drop sets: final set only, reduce the load by 25 to 30% and continue to failure."],"volumeTargets":{"Chest":16,"Back":16,"Quads":12,"Hamstrings":10,"Glutes":5,"Side delts":10,"Rear delts":6,"Biceps":6,"Triceps":6,"Calves":7,"Abs":6},"keyLifts":["Barbell Back Squat","Romanian Deadlift","Incline DB Press","Chest Supported Row","Seated DB Overhead Press","Pull Ups / Chin Ups"],"days":[{"dow":1,"am":"6:30 Functional Training","amCardio":true,"pm":"Chest & Back","type":"weights","warmup":["5 to 10 min light cardio","Band pull aparts and dynamic chest stretches"],"cooldown":["Chest, lat and shoulder stretches"],"exercises":[{"group":"A1","name":"Incline DB Press","sets":4,"repMin":8,"repMax":10,"cue":"Straight into A2, 2 to 3s lowering","muscle":"Chest","drop":false,"rest":0,"cat":"Incline_Dumbbell_Press"},{"group":"A2","name":"Chest Supported Row","sets":4,"repMin":8,"repMax":10,"cue":"Squeeze at the top, 90s rest after","muscle":"Back","drop":false,"rest":90,"cat":"Dumbbell_Incline_Row"},{"group":"B1","name":"Flat Machine Press","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, continuous tension","muscle":"Chest","drop":false,"rest":0,"cat":"Leverage_Chest_Press"},{"group":"B2","name":"Lat Pulldown","sets":3,"repMin":10,"repMax":12,"cue":"Full stretch at the top, 60s rest after","muscle":"Back","drop":false,"rest":60,"cat":"Wide-Grip_Lat_Pulldown"},{"group":"C1","name":"Cable Flye","sets":3,"repMin":12,"repMax":15,"cue":"Straight into C2, drop set on final set (25 to 30% off)","muscle":"Chest","drop":true,"rest":0,"cat":"Cable_Crossover"},{"group":"C2","name":"Cable Lateral Raise","sets":3,"repMin":12,"repMax":15,"cue":"Single arm, cable behind you, 60s rest after","muscle":"Side delts","drop":false,"rest":60,"cat":"Cable_Seated_Lateral_Raise"}]},{"dow":2,"am":"","amCardio":false,"pm":"Quads & Calves","type":"weights","warmup":["5 to 10 min treadmill incline walk","Hip and ankle mobility drills"],"cooldown":["Lower body stretching"],"exercises":[{"group":"A","name":"Barbell Back Squat","sets":4,"repMin":6,"repMax":8,"cue":"Straight sets, 2 to 3 min rest, ramp sets first","muscle":"Quads","drop":false,"rest":150,"cat":"Barbell_Squat"},{"group":"B1","name":"Leg Press","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, full depth, no lockout","muscle":"Quads","drop":false,"rest":0,"cat":"Leg_Press"},{"group":"B2","name":"Standing Calf Raise","sets":4,"repMin":10,"repMax":12,"cue":"2s pause at the bottom, 90s rest after","muscle":"Calves","drop":false,"rest":90,"cat":"Standing_Calf_Raises"},{"group":"C1","name":"Leg Extension","sets":3,"repMin":12,"repMax":15,"cue":"Straight into C2, drop set on final set","muscle":"Quads","drop":true,"rest":0,"cat":"Leg_Extensions"},{"group":"C2","name":"Seated Leg Curl","sets":3,"repMin":10,"repMax":12,"cue":"Lean forward slightly, 60s rest after","muscle":"Hamstrings","drop":false,"rest":60,"cat":"Seated_Leg_Curl"}]},{"dow":3,"am":"6:30 Functional Training","amCardio":true,"pm":"Shoulders & Arms","type":"weights","warmup":["Arm circles and band pull aparts","Light dumbbell shoulder rotations"],"cooldown":["Shoulder, biceps and triceps stretches"],"exercises":[{"group":"A1","name":"Seated DB Overhead Press","sets":4,"repMin":8,"repMax":10,"cue":"Straight into A2, ribs down, no big arch","muscle":"Front delts","drop":false,"rest":0,"cat":"Seated_Dumbbell_Press"},{"group":"A2","name":"DB Lateral Raise","sets":4,"repMin":12,"repMax":15,"cue":"Lead with the elbows, 75s rest after","muscle":"Side delts","drop":false,"rest":75,"cat":"Side_Lateral_Raise"},{"group":"B1","name":"EZ Bar Curl","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, elbows pinned","muscle":"Biceps","drop":false,"rest":0,"cat":"EZ-Bar_Curl"},{"group":"B2","name":"Overhead Cable Triceps Ext","sets":3,"repMin":10,"repMax":12,"cue":"Full stretch, 60s rest after","muscle":"Triceps","drop":false,"rest":60,"cat":"Cable_Rope_Overhead_Triceps_Extension"},{"group":"C1","name":"Cable Face Pull","sets":3,"repMin":15,"repMax":20,"cue":"Straight into C2, pull to forehead, rotate hands back","muscle":"Rear delts","drop":false,"rest":0,"cat":"Face_Pull"},{"group":"C2","name":"Machine Lateral Raise","sets":3,"repMin":12,"repMax":15,"cue":"Drop set on final set, 60s rest after","muscle":"Side delts","drop":true,"rest":60},{"group":"D","name":"Hanging Leg Raise","sets":3,"repMin":10,"repMax":15,"cue":"Curl the pelvis up, no swinging, 60s rest","muscle":"Abs","drop":false,"rest":60,"cat":"Hanging_Leg_Raise"}]},{"dow":4,"am":"Rest","amCardio":false,"pm":"Rest Day","type":"rest","warmup":["Active rest"],"cooldown":["Full body stretching"],"notes":["No lifting","Light walking and mobility only","Good day to check this week's loads against the progression rules","Weekly check-in today: weigh in, measure and take photos before food."],"checklist":["Steps target hit","Mobility done","Loads reviewed","Check-in done"],"exercises":[]},{"dow":5,"am":"6:30 Bootcamp","amCardio":true,"pm":"Upper Pump","type":"weights","warmup":["5 min light rowing","Shoulder and lat mobility"],"cooldown":["Chest, back and arm stretches"],"exercises":[{"group":"A1","name":"Weighted Dips","sets":3,"repMin":8,"repMax":10,"cue":"Straight into A2, slight forward lean","muscle":"Chest","drop":false,"rest":0,"cat":"Dips_-_Chest_Version"},{"group":"A2","name":"Pull Ups / Chin Ups","sets":3,"repMin":6,"repMax":10,"cue":"Add weight or assistance to stay in range, 90s rest after","muscle":"Back","drop":false,"rest":90,"cat":"Pullups"},{"group":"B1","name":"Incline DB Hammer Curl","sets":3,"repMin":10,"repMax":12,"cue":"Straight into B2, full stretch at the bottom","muscle":"Biceps","drop":false,"rest":0,"cat":"Incline_Hammer_Curls"},{"group":"B2","name":"Cable Triceps Pushdown","sets":3,"repMin":10,"repMax":12,"cue":"Hard squeeze at lockout, 60s rest after","muscle":"Triceps","drop":false,"rest":60,"cat":"Triceps_Pushdown"},{"group":"C1","name":"Pec Deck","sets":3,"repMin":12,"repMax":15,"cue":"Straight into C2, drop set on final set","muscle":"Chest","drop":true,"rest":0,"cat":"Butterfly"},{"group":"C2","name":"Reverse Pec Deck","sets":3,"repMin":15,"repMax":20,"cue":"Thumbs down, sweep wide, 60s rest after","muscle":"Rear delts","drop":false,"rest":60,"cat":"Reverse_Machine_Flyes"},{"group":"D","name":"Cable Crunch","sets":3,"repMin":12,"repMax":15,"cue":"Round the spine, no hip hinge, 60s rest","muscle":"Abs","drop":false,"rest":60,"cat":"Cable_Crunch"}]},{"dow":6,"am":"","amCardio":false,"pm":"Posterior Chain & Back","type":"weights","warmup":["5 to 10 min treadmill incline walk","Hip hinge drills and glute activation"],"cooldown":["Hamstring, glute and lat stretches"],"exercises":[{"group":"A","name":"Romanian Deadlift","sets":4,"repMin":8,"repMax":10,"cue":"Straight sets, 2 min rest, straps allowed","muscle":"Hamstrings","drop":false,"rest":120,"cat":"Romanian_Deadlift"},{"group":"B1","name":"Hip Thrust (machine or BB)","sets":3,"repMin":8,"repMax":12,"cue":"Straight into B2, 1s hold at the top","muscle":"Glutes","drop":false,"rest":0,"cat":"Barbell_Hip_Thrust"},{"group":"B2","name":"Chest Supported T-Bar Row","sets":3,"repMin":8,"repMax":10,"cue":"Pull to the lower ribs, 90s rest after","muscle":"Back","drop":false,"rest":90,"cat":"Lying_T-Bar_Row"},{"group":"C1","name":"Lying Leg Curl","sets":3,"repMin":10,"repMax":12,"cue":"Straight into C2, 3s lowering","muscle":"Hamstrings","drop":false,"rest":0,"cat":"Lying_Leg_Curls"},{"group":"C2","name":"Neutral Grip Lat Pulldown","sets":3,"repMin":10,"repMax":12,"cue":"Full stretch at the top, 60s rest after","muscle":"Back","drop":false,"rest":60,"cat":"V-Bar_Pulldown"},{"group":"D1","name":"Bulgarian Split Squat","sets":2,"repMin":10,"repMax":12,"repNote":"each leg","cue":"Straight into D2, slight forward lean","muscle":"Quads","muscle2":"Glutes","drop":false,"rest":0,"cat":"Split_Squat_with_Dumbbells"},{"group":"D2","name":"Seated Calf Raise","sets":3,"repMin":12,"repMax":15,"cue":"Pause at peak contraction, 60s rest after","muscle":"Calves","drop":false,"rest":60,"cat":"Seated_Calf_Raise"}]},{"dow":7,"am":"Rest","amCardio":false,"pm":"Rest","type":"rest","warmup":[],"cooldown":[],"notes":[],"checklist":[],"exercises":[]}],"nutrition":{"kcal":2070,"protein":170,"carbs":186,"fat":63,"fibre":28,"weeklyTargetMin":0.25,"weeklyTargetMax":0.5,"reviewDays":14,"stepsTarget":10000,"meals":[{"time":"07:30","name":"Breakfast","note":"scrambled, then blended","items":["2 whole eggs, large","3 egg whites, large","30 g oats","100 g frozen berries","10 g almond butter"],"kcal":410,"p":28,"c":30,"f":18},{"time":"11:30","name":"Lunch","note":"largest plate of the day","items":["150 g chicken breast, cooked weight, air fryer","60 g jasmine rice, dry weight","150 g green vegetables","10 g extra virgin olive oil"],"kcal":575,"p":53,"c":50,"f":15},{"time":"14:45","name":"Pre workout","note":"90 minutes before the first set","items":["55 g MFA powder","85 g banana"],"kcal":300,"p":20,"c":47,"f":1},{"time":"17:45","name":"Post workout","note":"whole food recovery","items":["130 g 5% mince, cooked weight, wok","200 g potatoes, cooked weight","100 g green vegetables","5 g extra virgin olive oil"],"kcal":455,"p":42,"c":38,"f":14},{"time":"20:15","name":"Evening","note":"slow protein before a 22:00 bed","items":["200 g Skyr","100 g frozen berries","15 g almond butter","10 g dark chocolate, 85%"],"kcal":330,"p":27,"c":21,"f":15}],"notes":["Weighing: meat is cooked weight, rice is dry weight. Weigh nuts and nut butter rather than eyeballing them.","Creatine: one MFA serving gives roughly 1.8 g, under a maintenance dose. Start 5 g of standalone monohydrate once the tubs run out.","Salt: MFA carries 0.8 g at meal three. Keep added salt light elsewhere and hold the day to 5 g to 6 g.","Steps: 10,000 or more daily alongside this.","Still open: swap the lunch chicken for 130 g cooked salmon twice a week for omega 3. Consider vitamin D through autumn and winter.","If weight stalls past 14 days, trim 10 g to 15 g of carbohydrate from lunch first."]},"checkinDow":4};
+const TARGET = /*TARGET*/"pwa"; // "pwa" for the phone build, "artifact" for the preview inside Claude
+let ROUTE = "today", DL = null, MEMORY_ONLY = false;
+const NATIVE = !!(window.Capacitor && typeof window.Capacitor.isNativePlatform === "function" && window.Capacitor.isNativePlatform());
+const plugin = n => (NATIVE && window.Capacitor.Plugins && window.Capacitor.Plugins[n]) || null;
+function curHash() { return TARGET === "pwa" ? (location.hash.replace(/^#\/?/, "") || "today") : ROUTE; }
+function go(h) { h = String(h).replace(/^#\/?/, ""); if (TARGET === "pwa") location.hash = "#/" + h; else { ROUTE = h; render(false); } }
+const CK_NOTE = "Weekly check-in today: weigh in, measure and take photos before food.";
 
 /* ---------- helpers ---------- */
 const $ = (s, r = document) => r.querySelector(s);
@@ -188,6 +199,7 @@ function openDB() {
   });
 }
 function tx(store, mode, fn) {
+  if (!idb) return Promise.resolve(undefined);
   return new Promise((res, rej) => {
     const t = idb.transaction(store, mode); const req = fn(t.objectStore(store));
     t.oncomplete = () => res(req ? req.result : undefined); t.onerror = () => rej(t.error);
@@ -270,20 +282,62 @@ function progression(ex, date, c) {
   if (work.some(s => s.reps < ex.repMin)) return { cls: "low", text: `Below ${ex.repMin} reps on ${when}. Hold the load, or drop it if it happens again.` };
   return { cls: "", text: `Same load as ${when}, chase reps towards ${ex.repMax}.` };
 }
+function permSwap(b, dow, name, date) { const p = (b.swaps || {})[`${dow}|${name}`]; return p && date >= p.from && (!p.to || date <= p.to) ? p : null; }
+function dayExercises(date, c) {
+  if (!c) return [];
+  const ses = S.sessions.get(date) || {};
+  return c.day.exercises.map(ex => {
+    let name = ex.name, how = null; const p = permSwap(c.block, c.day.dow, ex.name, date);
+    let cat = ex.cat;
+    if (p) { name = p.name; how = "block"; cat = p.cat; }
+    if (ses.swaps && ses.swaps[ex.name]) { name = ses.swaps[ex.name]; how = "today"; cat = (ses.swapCat || {})[ex.name]; }
+    return how && name !== ex.name ? { ...ex, name, cat, orig: ex.name, swap: how } : ex;
+  });
+}
 function sessionStatus(date, c) {
   if (!c || c.day.type !== "weights") return "rest";
   const ses = S.sessions.get(date);
   if (ses && ses.done) return "done";
   let logged = 0, want = 0;
-  for (const ex of c.day.exercises) { want += ex.sets; logged += workSets(setsOn(date, ex.name)).length; }
+  for (const ex of dayExercises(date, c)) { want += ex.sets; logged += workSets(setsOn(date, ex.name)).length; }
   if (want && logged >= want) return "done";
   return logged > 0 ? "part" : (date < todayIso() ? "missed" : "todo");
 }
 function weekDates(b, wi) { const s = addDays(b.startDate, wi * 7); return [...Array(7)].map((_, i) => addDays(s, i)); }
+const ckDow = b => b.checkinDow || 4;
+const ckDate = (b, wi) => addDays(b.startDate, wi * 7 + ckDow(b) - 1);
+const ckDates = (b, wi) => { const e = ckDate(b, wi); return [...Array(7)].map((_, i) => addDays(e, i - 6)); };
+const ckRange = (b, wi) => { const d = ckDates(b, wi); return `${DOW[parse(d[0]).getDay()]} ${fmtShort(d[0])} to ${DOW[parse(d[6]).getDay()]} ${fmtShort(d[6])}`; };
+const MEAS = [
+  ["neck", "Neck", "Just below the Adam's apple, tape level"],
+  ["shoulders", "Shoulders", "Around the widest point of the delts, arms relaxed by your sides"],
+  ["chest", "Chest", "Across the nipple line, arms down, after a normal breath out"],
+  ["waist", "Waist", "At the navel, relaxed, after a normal breath out. Don't suck in"],
+  ["hips", "Hips", "Around the widest point of the glutes, feet together"],
+  ["armL", "Left biceps", "Flexed, at the peak of the biceps, arm out level with the shoulder"],
+  ["armR", "Right biceps", "As left"],
+  ["forearmL", "Left forearm", "Widest point, fist clenched, arm straight"],
+  ["forearmR", "Right forearm", "As left"],
+  ["thighL", "Left thigh", "Midway between the hip crease and the top of the knee, standing, weight even"],
+  ["thighR", "Right thigh", "As left"],
+  ["calfL", "Left calf", "Widest point, standing, weight even"],
+  ["calfR", "Right calf", "As left"],
+  ["bf", "Body fat %", "Optional. Same scales or calipers each time, or leave blank"]
+];
+const mUnit = k => k === "bf" ? "%" : "cm";
+function ckDateOf(ck) { if (ck.date) return ck.date; const [bid, wi] = String(ck.id).split("|"); const b = S.blocks.get(bid); return b ? ckDate(b, Number(wi)) : null; }
+function mVal(ck, k) { if (!ck) return null; if (ck.m && ck.m[k] > 0) return ck.m[k]; if (k === "waist" && ck.waist > 0) return ck.waist; return null; }
+function measSeries(k) { return [...S.checkins.values()].map(c => ({ x: ckDateOf(c), y: mVal(c, k) })).filter(p => p.x && p.y != null).sort((a, z) => a.x.localeCompare(z.x)); }
+function prevMeas(k, before) { const a = measSeries(k).filter(p => p.x < before); return a.length ? a[a.length - 1] : null; }
+const signed = (v, d = 1) => (v > 0 ? "+" : "") + fmtN(v, d);
+const SCORES = ["bb", "sleepScore", "readiness"];
+const SCORE_NAMES = { bb: "Body Battery", sleepScore: "Sleep score", readiness: "Training Readiness" };
+function avgField(dates, k) { const v = dates.map(d => (S.daily.get(d) || {})[k]).filter(x => x != null && x !== ""); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; }
+function readinessBand(v) { return v >= 95 ? "Prime" : v >= 75 ? "High" : v >= 50 ? "Moderate" : v >= 25 ? "Low" : "Poor"; }
 function weightOn(d) { const x = S.daily.get(d); return x && x.weight > 0 ? x.weight : null; }
 function avgWeight(dates) { const w = dates.map(weightOn).filter(v => v != null); return w.length ? w.reduce((a, b) => a + b, 0) / w.length : null; }
-function weekStats(b, wi) {
-  const ds = weekDates(b, wi); let weights = 0, weightsWant = 0, am = 0, amWant = 0, meals = 0, steps = 0, protein = 0;
+function weekStats(b, wi, ds = weekDates(b, wi)) {
+  let weights = 0, weightsWant = 0, am = 0, amWant = 0, meals = 0, steps = 0, protein = 0;
   const stepsT = b.nutrition?.stepsTarget || 10000, mealN = b.nutrition?.meals?.length || 0;
   for (const d of ds) {
     const c = ctxFor(d), dl = S.daily.get(d) || {};
@@ -299,7 +353,7 @@ function volumeFor(b, wi) {
   const out = {}; for (const k in b.volumeTargets || {}) out[k] = 0;
   for (const d of weekDates(b, wi)) {
     const c = ctxFor(d); if (!c || c.block.id !== b.id) continue;
-    for (const ex of c.day.exercises) {
+    for (const ex of dayExercises(d, c)) {
       const n = workSets(setsOn(d, ex.name)).length; if (!n) continue;
       for (const m of [ex.muscle, ex.muscle2]) if (m) out[m] = (out[m] || 0) + n;
     }
@@ -311,7 +365,7 @@ function liftTrend(b, wi) {
   if (wi < 1) return null;
   let a = 0, p = 0, n = 0;
   for (const lift of b.keyLifts || []) {
-    const t = bestInWeek(lift, weekDates(b, wi)), q = bestInWeek(lift, weekDates(b, wi - 1));
+    const t = bestInWeek(lift, ckDates(b, wi)), q = bestInWeek(lift, ckDates(b, wi - 1));
     if (t && q && t.e > 0 && q.e > 0) { a += t.e; p += q.e; n++; }
   }
   if (!n) return null;
@@ -326,11 +380,11 @@ function bestInWeek(ex, dates) {
 function decision(b, wi) {
   const w = b.weeks[wi]; if (w && w.deload) return { cls: "warn", text: "Deload week. Hold intake, do not cut." };
   const n = b.nutrition || {}, lo = n.weeklyTargetMin ?? 0.25, hi = n.weeklyTargetMax ?? 0.5;
-  const cur = avgWeight(weekDates(b, wi)), prev = wi > 0 ? avgWeight(weekDates(b, wi - 1)) : null, prev2 = wi > 1 ? avgWeight(weekDates(b, wi - 2)) : null;
-  if (cur == null || prev == null) return { cls: "", text: "Need two weeks of weigh-ins to compare averages." };
+  const cur = avgWeight(ckDates(b, wi)), prev = avgWeight(ckDates(b, wi - 1)), prev2 = avgWeight(ckDates(b, wi - 2));
+  if (cur == null || prev == null) return { cls: "", text: "Need two check-in periods of weigh-ins to compare averages." };
   const loss = prev - cur, trend = liftTrend(b, wi), trendPrev = wi > 1 ? liftTrend(b, wi - 1) : null;
-  const ck = S.checkins.get(`${b.id}|${wi}`) || {}, ckp = S.checkins.get(`${b.id}|${wi - 1}`) || {};
-  const waistDown = ck.waist > 0 && ckp.waist > 0 ? ck.waist < ckp.waist : null;
+  const wNow = mVal(S.checkins.get(`${b.id}|${wi}`), "waist"), wPrev = prevMeas("waist", ckDate(b, wi));
+  const waistDown = wNow != null && wPrev ? wNow < wPrev.y : null;
   if (loss > 0.75 || (trend === "down" && trendPrev === "down")) return { cls: "bad", text: `Losing ${fmtN(loss, 2)} kg a week${trend === "down" ? " and lifts down" : ""}. Add 25 g carbohydrate at lunch on training days (about 35 g extra dry rice).` };
   if (prev2 != null && Math.abs(prev2 - cur) < 0.25) {
     if (waistDown && trend === "up") return { cls: "good", text: "Weight flat but waist down and lifts up. Recomposition is working. Leave it alone." };
@@ -363,13 +417,15 @@ function viewDay(date) {
   }
   const { block, week, wi, day } = c;
   h += `<div class="card"><div class="muted small">${esc(block.name)}</div><h2>${esc(day.pm || "Rest")}</h2>
-    <div class="chips"><span class="chip">Week ${wi + 1} of ${block.weeks.length}</span>${day.type === "weights" ? `<span class="chip">Target RIR ${esc(week.rir)}</span>${week.dropSets ? '<span class="chip">Drop sets on</span>' : ""}` : ""}${week.deload ? '<span class="chip warn">Deload</span>' : ""}</div>
+    <div class="chips"><span class="chip">Week ${wi + 1} of ${block.weeks.length}</span>${day.type === "weights" ? `<span class="chip">Target RIR ${esc(week.rir)}</span>${week.dropSets ? '<span class="chip">Drop sets on</span>' : ""}` : ""}${week.deload ? '<span class="chip warn">Deload</span>' : ""}${dl.readiness != null ? `<span class="chip ${dl.readiness >= 75 ? "good" : dl.readiness < 50 ? "warn" : ""}">Readiness ${dl.readiness}, ${readinessBand(dl.readiness)}</span>` : ""}</div>
+    ${day.type === "weights" && dl.readiness != null && dl.readiness < 50 && !week.deload ? `<div class="note">Readiness is ${readinessBand(dl.readiness).toLowerCase()} today. Same as your Friday rule: train, but cap everything at 2 RIR.</div>` : ""}
     ${week.note && day.type === "weights" ? `<div class="note">${esc(week.note)}</div>` : ""}
     ${day.dow === 5 && day.type === "weights" && !week.deload ? `<div class="note">If Bootcamp has flattened you, cap everything at 2 RIR rather than skipping.</div>` : ""}</div>`;
+  if (day.dow === ckDow(block)) { const ck = S.checkins.get(`${block.id}|${wi}`); const doneCk = ck && MEAS.some(([k]) => mVal(ck, k) != null);
+    h += `<a class="btn ${doneCk ? "" : "primary"}" style="width:100%;text-align:center;margin-bottom:12px" href="#/checkin/${esc(block.id)}/${wi}">${doneCk ? "Check-in done ✓, open it" : "Weekly check-in: weigh in, measure, photos"}</a>`; }
   if (day.am && day.am !== "Rest") h += `<div class="card"><h3>AM</h3>${tickBtn(dl.amDone, "am", "", esc(day.am))}</div>`;
   h += day.type === "weights" ? sessionHtml(date, c) : restHtml(date, c, dl);
   h += dailyCard(date, dl, c);
-  if (day.dow === 7) h += `<a class="btn primary" style="width:100%;text-align:center;margin-bottom:12px" href="#/checkin/${esc(block.id)}/${wi}">Weekly check-in, week ${wi + 1}</a>`;
   return h;
 }
 function restHtml(date, c, dl) {
@@ -381,7 +437,7 @@ function sessionHtml(date, c) {
   const { day } = c, ses = S.sessions.get(date) || {};
   let h = `<details class="card"><summary>Warm-up and cool-down</summary><div class="grid2" style="margin-top:8px"><div><div class="muted small">Warm-up</div><ul class="plain">${(day.warmup || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div><div><div class="muted small">Cool-down</div><ul class="plain">${(day.cooldown || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></div></details>`;
   let lastLetter = "";
-  day.exercises.forEach((ex, i) => { const L = (ex.group || "")[0]; if (i && L !== lastLetter) h += `<div class="groupgap"></div>`; lastLetter = L; h += exCard(date, c, ex, i); });
+  dayExercises(date, c).forEach((ex, i) => { const L = (ex.group || "")[0]; if (i && L !== lastLetter) h += `<div class="groupgap"></div>`; lastLetter = L; h += exCard(date, c, ex, i); });
   const f = (k, l, unit) => `<label class="f"><span>${l}${unit ? ` (${unit})` : ""}</span><input inputmode="decimal" data-ses="${k}" value="${esc(ses[k] ?? "")}"></label>`;
   h += `<div class="card"><h3>Session statistics</h3><div class="grid2">${f("mhr", "Max HR", "bpm")}${f("ahr", "Average HR", "bpm")}${f("mins", "Total time", "min")}${f("kcal", "Calories burned", "kcal")}</div>
     <label class="f"><span>Comments</span><textarea data-ses="comments">${esc(ses.comments || "")}</textarea></label>
@@ -409,21 +465,22 @@ function exCard(date, c, ex, i) {
   for (let n = 1; n <= ex.sets; n++) rows += row("s", n, "S" + n, true);
   if (drop) rows += row("d", 1, "Drop", false);
   const prevTxt = prev ? workSets(prev.sets).map(s => `${fmtN(s.kg)}×${s.reps}`).join(", ") : "";
-  return `<div class="card ex" data-ex="${esc(ex.name)}" data-rest="${ex.rest || 0}">
+  return `<div class="card ex" data-ex="${esc(ex.name)}" data-orig="${esc(ex.orig || ex.name)}" data-muscle="${esc(ex.muscle || "")}" data-rest="${ex.rest || 0}">
     <div class="top"><div class="badge">${esc(ex.group || "")}</div><div style="flex:1"><div class="name">${esc(ex.name)}</div>
     <div class="presc">${ex.sets} × ${ex.repMin} to ${ex.repMax} reps${ex.repNote ? " " + esc(ex.repNote) : ""}${drop ? " · drop set on the last set" : ""}</div>
     <div class="presc">${esc(ex.cue || "")}</div></div></div>
+    ${ex.swap ? `<div class="note small" style="display:flex;gap:8px;align-items:center"><span style="flex:1">Swapped in for ${esc(ex.orig)}, ${ex.swap === "today" ? "today only" : "rest of this block"}.</span><button data-act="unswap" data-how="${ex.swap}" style="padding:5px 10px">Undo</button></div>` : ""}
     <div class="prog ${prog.cls}">${esc(prog.text)}</div>
     ${prevTxt ? `<div class="muted small">Last time (${fmtShort(prev.date)}): ${esc(prevTxt)}</div>` : ""}
     <div class="rows"><div class="rowh"><span></span><span>kg</span><span>reps</span><span>RIR</span><span></span></div>${rows}</div>
-    <div class="exfoot"><button data-act="fill">Fill kg from last time</button><button data-act="addwarm">+ warm-up set</button>${ex.rest ? `<button data-act="rest">Rest ${ex.rest}s</button>` : ""}</div></div>`;
+    <div class="exfoot"><button data-act="fill">Fill kg from last time</button><button data-act="addwarm">+ warm-up set</button><button data-act="swap">Swap exercise</button>${ex.cat || catFor(ex) ? `<button data-act="howto" data-id="${esc(ex.cat || catFor(ex).i)}">How to</button>` : ""}${ex.rest ? `<button data-act="rest">Rest ${ex.rest}s</button>` : ""}</div></div>`;
 }
 function dailyCard(date, dl, c) {
   const n = c ? c.block.nutrition : null, meals = n ? n.meals : [];
   const f = (k, l, im) => `<label class="f"><span>${l}</span><input inputmode="${im}" data-daily="${k}" value="${esc(dl[k] ?? "")}"></label>`;
   const ticked = meals.filter((_, i) => dl.meals && dl.meals[i]);
   const p = ticked.reduce((a, m) => a + (m.p || 0), 0);
-  return `<div class="card"><h3>Daily log</h3><div class="grid3">${f("weight", "Weight kg", "decimal")}${f("steps", "Steps", "numeric")}${f("sleep", "Sleep h", "decimal")}</div>
+  return `<div class="card"><h3>Daily log</h3><div class="muted small" style="margin-bottom:6px">Morning scores, 0 to 100</div><div class="grid3">${f("bb", "Body Battery (AM)", "numeric")}${f("sleepScore", "Sleep score", "numeric")}${f("readiness", "Training Readiness", "numeric")}</div><div class="grid3">${f("weight", "Weight kg", "decimal")}${f("steps", "Steps", "numeric")}${f("sleep", "Sleep h", "decimal")}</div>
     <div class="muted small" style="margin:-4px 0 8px">Weigh after the toilet, before food, same scales.</div>
     ${meals.length ? `<div class="muted small" style="margin-bottom:6px">Meals on plan ${ticked.length}/${meals.length} · about ${p} g protein</div>
     <div class="grid${meals.length > 4 ? "3" : "2"}" style="gap:6px">${meals.map((m, i) => `<button class="tickitem ${dl.meals && dl.meals[i] ? "on" : ""}" data-act="meal" data-i="${i}" style="padding:8px"><span class="box">${dl.meals && dl.meals[i] ? "✓" : ""}</span><span class="t small">${esc(m.name)}</span></button>`).join("")}</div>
@@ -448,7 +505,7 @@ function viewPlan() {
     <div class="chips"><span class="chip">RIR ${esc(w.rir)}</span><span class="chip">Drop sets ${w.dropSets ? "yes" : "no"}</span>${w.note ? `<span class="chip">${esc(w.note)}</span>` : ""}</div>
     <div class="weekdays">${ds.map(d => { const c = ctxFor(d), st = c && c.block.id === b.id ? sessionStatus(d, c) : "rest"; const sym = { done: "✓", part: "◐", missed: "✗", todo: "", rest: "·" }[st];
       return `<a class="wd ${st === "rest" ? "rest" : ""} ${st === "done" ? "done" : ""} ${st === "part" ? "part" : ""} ${d === today ? "today" : ""}" href="#/day/${d}"><b>${DOW[parse(d).getDay()]}</b>${parse(d).getDate()}<span class="s">${sym}</span></a>`; }).join("")}</div>
-    <div class="btnrow"><a class="btn" href="#/checkin/${esc(b.id)}/${wi}">Check-in</a></div></div>`;
+    <div class="btnrow"><a class="btn" href="#/checkin/${esc(b.id)}/${wi}">Check-in, ${DOW[parse(ckDate(b, wi)).getDay()]} ${fmtShort(ckDate(b, wi))}</a></div></div>`;
   });
   h += `<details class="card"><summary>Rules</summary><ul class="plain">${(b.rules || []).map(r => `<li style="margin-bottom:6px">${esc(r)}</li>`).join("")}</ul></details>`;
   h += `<details class="card"><summary>Weekly working sets per muscle</summary><table>${Object.entries(b.volumeTargets || {}).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="n">${v}</td></tr>`).join("")}</table></details>`;
@@ -476,22 +533,35 @@ const tileS = (v, k) => `<div class="tile"><div class="v">${v}</div><div class="
 
 /* ---------- views: check-in ---------- */
 const RATINGS = ["Energy in sessions", "Hunger", "Sleep quality", "Recovery between sessions", "Mood and motivation", "Digestion"];
+function mChange(v, p) { if (!p) return v != null ? '<span class="muted">first reading</span>' : '<span class="muted">no previous</span>'; return `<span class="muted">last ${fmtN(p.y)}</span>${v != null ? `<br><b>${signed(v - p.y)}</b>` : ""}`; }
 function viewCheckin(bid, wi) {
   const b = S.blocks.get(bid); wi = Number(wi); if (!b || !b.weeks[wi]) return noBlocks();
-  const id = `${bid}|${wi}`, ck = S.checkins.get(id) || { id }, ws = weekStats(b, wi), prev = wi > 0 ? weekStats(b, wi - 1).avg : null;
-  const dec = decision(b, wi), ds = weekDates(b, wi);
-  let h = `<div class="card"><div class="muted small">${esc(b.name)}</div><h2>Weekly check-in, week ${wi + 1} of ${b.weeks.length}</h2><div class="muted">Week commencing ${fmtDate(ds[0])} · RIR ${esc(b.weeks[wi].rir)}</div></div>`;
-  h += `<div class="tiles">${tileS(ws.avg ? fmtN(ws.avg, 2) : "n/a", "avg weight kg")}${tileS(ws.avg && prev ? (ws.avg - prev > 0 ? "+" : "") + fmtN(ws.avg - prev, 2) : "n/a", "change vs last week")}${tileS(`${b.nutrition?.weeklyTargetMin ?? 0.25} to ${b.nutrition?.weeklyTargetMax ?? 0.5}`, "target loss kg")}</div>`;
-  h += `<div class="card"><h3>Suggested decision</h3><div class="prog ${dec.cls === "good" ? "add" : dec.cls === "bad" ? "low" : dec.cls === "warn" ? "deload" : ""}">${esc(dec.text)}</div><div class="muted small">Based on the decision guide, using weekly averages, waist and key lift trend.</div></div>`;
-  h += `<div class="card"><div class="grid2"><label class="f"><span>Waist cm</span><input inputmode="decimal" data-ck="waist" value="${esc(ck.waist ?? "")}"></label><div><span class="muted small">Photos taken</span><div class="rate"><button data-act="ck-photos" data-v="1" class="${ck.photos === true ? "on" : ""}">Yes</button><button data-act="ck-photos" data-v="0" class="${ck.photos === false ? "on" : ""}">No</button></div></div></div></div>`;
+  const id = `${bid}|${wi}`, ck = S.checkins.get(id) || { id }, ds = ckDates(b, wi), cd = ckDate(b, wi);
+  const ws = weekStats(b, wi, ds), prev = avgWeight(ckDates(b, wi - 1));
+  const dec = decision(b, wi);
+  let h = `<div class="card"><div class="muted small">${esc(b.name)}</div><h2>Weekly check-in, week ${wi + 1} of ${b.weeks.length}</h2><div class="muted">${fmtDate(cd)} · covers ${ckRange(b, wi)}</div>
+    <div class="note">Measure first thing: after the toilet, before food and before any training. Same tape, tape snug but not digging in, and take each reading twice.</div></div>`;
+  h += `<div class="tiles">${tileS(ws.avg ? fmtN(ws.avg, 2) : "n/a", "avg weight kg, 7 days")}${tileS(ws.avg && prev ? signed(ws.avg - prev, 2) : "n/a", "change vs last check-in")}${tileS(`${b.nutrition?.weeklyTargetMin ?? 0.25} to ${b.nutrition?.weeklyTargetMax ?? 0.5}`, "target loss kg")}</div>`;
+  h += `<div class="card"><h3>Suggested decision</h3><div class="prog ${dec.cls === "good" ? "add" : dec.cls === "bad" ? "low" : dec.cls === "warn" ? "deload" : ""}">${esc(dec.text)}</div><div class="muted small">Based on the decision guide, using 7 day averages, waist and key lift trend.</div></div>`;
+  const imT = b.imTarget || 150, pIm = S.checkins.get(`${bid}|${wi - 1}`);
+  h += `<div class="card"><h3>Intensity minutes</h3><div class="mrow" style="border:0;padding-top:0"><div><div>7 days to ${fmtShort(cd)}</div><div class="muted small">From your watch. Vigorous minutes count double. Target ${imT} a week.</div></div>
+      <input inputmode="numeric" data-ck="im" value="${ck.im ?? ""}" aria-label="Intensity minutes"><div class="small mchg">${pIm && pIm.im != null ? `<span class="muted">last ${pIm.im}</span>` : '<span class="muted">no previous</span>'}</div></div>
+    ${ck.im != null ? `<div class="bar" style="grid-template-columns:1fr 64px;margin-top:4px"><span class="track"><span class="fill" style="width:${Math.min(100, ck.im / imT * 100)}%"></span></span><span class="n" style="text-align:right">${Math.round(ck.im / imT * 100)}%</span></div>` : ""}
+    <div class="muted small" style="margin-top:10px">Recovery, 7 day averages</div><div class="tiles" style="margin:6px 0 0">${SCORES.map(k => { const a = avgField(ds, k), pa = avgField(ckDates(b, wi - 1), k); return tileS(a != null ? Math.round(a) + (pa != null ? `<span class="muted small"> ${signed(a - pa, 0)}</span>` : "") : "n/a", SCORE_NAMES[k]); }).join("")}</div></div>`;
+  h += `<div class="card"><h3>Measurements</h3><div class="muted small" style="margin-bottom:8px">Centimetres. Last reading and change are from your previous check-in.</div>${MEAS.map(([k, label, how]) => {
+      const v = mVal(ck, k), p = prevMeas(k, cd);
+      return `<div class="mrow"><div><div>${label}${k === "bf" ? "" : ` <span class="muted small">${mUnit(k)}</span>`}</div><div class="muted small">${esc(how)}</div></div>
+        <input inputmode="decimal" data-ck="m.${k}" value="${v ?? ""}" aria-label="${label}">
+        <div class="small mchg" data-k="${k}">${mChange(v, p)}</div></div>`; }).join("")}
+    <div style="margin-top:6px"><span class="muted small">Progress photos taken (front, side, back, same light)</span><div class="rate"><button data-act="ck-photos" data-v="1" class="${ck.photos === true ? "on" : ""}">Yes</button><button data-act="ck-photos" data-v="0" class="${ck.photos === false ? "on" : ""}">No</button></div></div></div>`;
   h += `<div class="card"><h3>Adherence</h3><div class="tiles" style="margin:0">${tileS(`${ws.weights}/${ws.weightsWant}`, "weights sessions")}${tileS(`${ws.am}/${ws.amWant}`, "AM cardio")}${tileS(`${ws.meals}/${ws.mealsWant}`, "meals on plan")}${tileS(`${ws.steps}/7`, "10k step days")}</div></div>`;
   h += `<div class="card"><h3>Key lifts, best top set</h3><table><tr><th>Lift</th><th class="n">kg × reps</th><th class="n">Trend</th></tr>${(b.keyLifts || []).map(l => {
-    const t = bestInWeek(l, ds), q = wi > 0 ? bestInWeek(l, weekDates(b, wi - 1)) : null;
+    const t = bestInWeek(l, ds), q = bestInWeek(l, ckDates(b, wi - 1));
     const tr = t && q && t.e && q.e ? (t.e > q.e * 1.01 ? "Up" : t.e < q.e * 0.99 ? "Down" : "Same") : "";
     return `<tr><td>${esc(l)}</td><td class="n">${t ? `${fmtN(t.s.kg)} × ${t.s.reps}` : "n/a"}</td><td class="n">${tr}</td></tr>`; }).join("")}</table></div>`;
   h += `<div class="card"><h3>How it felt</h3><div class="muted small" style="margin-bottom:6px">1 poor, 3 normal, 5 excellent (hunger: 5 = very hungry)</div>${RATINGS.map(r => `<div class="small">${r}</div><div class="rate">${[1, 2, 3, 4, 5].map(v => `<button data-act="ck-rate" data-k="${esc(r)}" data-v="${v}" class="${ck.ratings && ck.ratings[r] === v ? "on" : ""}">${v}</button>`).join("")}</div>`).join("")}</div>`;
   h += `<div class="card"><label class="f"><span>Notes and change for next week</span><textarea data-ck="notes">${esc(ck.notes || "")}</textarea></label></div>`;
-  h += `<details class="card"><summary>Daily log for the week</summary><table><tr><th>Day</th><th class="n">kg</th><th class="n">Steps</th><th class="n">Meals</th><th class="n">Sleep</th></tr>${ds.map(d => { const x = S.daily.get(d) || {}; return `<tr><td><a href="#/day/${d}">${DOW[parse(d).getDay()]} ${parse(d).getDate()}</a></td><td class="n">${x.weight ?? ""}</td><td class="n">${x.steps ?? ""}</td><td class="n">${(x.meals || []).filter(Boolean).length || ""}</td><td class="n">${x.sleep ?? ""}</td></tr>`; }).join("")}</table></details>`;
+  h += `<details class="card"><summary>Daily log for the 7 days</summary><table><tr><th>Day</th><th class="n">kg</th><th class="n">Steps</th><th class="n">Meals</th><th class="n">Sleep</th></tr>${ds.map(d => { const x = S.daily.get(d) || {}; return `<tr><td><a href="#/day/${d}">${DOW[parse(d).getDay()]} ${parse(d).getDate()}</a></td><td class="n">${x.weight ?? ""}</td><td class="n">${x.steps ?? ""}</td><td class="n">${(x.meals || []).filter(Boolean).length || ""}</td><td class="n">${x.sleep ?? ""}</td></tr>`; }).join("")}</table></details>`;
   return h;
 }
 
@@ -503,8 +573,8 @@ function lineChart(series, opts = {}) {
   const W = 340, H = opts.h || 170, L = 38, R = 10, T = 10, B = 22;
   const dates = [...new Set(pts.map(p => p.x))].sort(), d0 = dates[0], span = Math.max(1, diffDays(dates[dates.length - 1], d0));
   let lo = Math.min(...pts.map(p => p.y)), hi = Math.max(...pts.map(p => p.y));
-  if (opts.band) { lo = Math.min(lo, opts.band[0]); hi = Math.max(hi, opts.band[1]); }
-  const padY = (hi - lo) * 0.1 || 1; lo -= padY; hi += padY;
+  if (opts.yMin != null) { lo = opts.yMin; hi = opts.yMax; }
+  else { const padY = (hi - lo) * 0.1 || 1; lo -= padY; hi += padY; }
   const X = d => L + diffDays(d, d0) / span * (W - L - R), Y = v => T + (hi - v) / (hi - lo) * (H - T - B);
   const dec = opts.dec ?? 1;
   let g = "";
@@ -546,8 +616,8 @@ function viewInsights() {
   let done = 0, due = 0, tonnage = 0;
   for (let d = b.startDate; d <= blockEnd(b) && d <= today; d = addDays(d, 1)) { const cc = ctxFor(d); if (cc && cc.block.id === b.id && cc.day.type === "weights") { due++; if (sessionStatus(d, cc) === "done") done++; } }
   for (const d of weekDates(b, wi)) for (const s of S.sets.values()) if (s.date === d && s.kind !== "w" && s.kg > 0 && s.reps > 0) tonnage += s.kg * s.reps;
-  const ws = weekStats(b, wi), prevAvg = wi > 0 ? weekStats(b, wi - 1).avg : null;
-  h += `<div class="tiles">${tileS(`${done}/${due}`, "sessions done so far")}${tileS(ws.avg ? fmtN(ws.avg, 1) : "n/a", `avg kg, week ${wi + 1}`)}${tileS(ws.avg && prevAvg ? (ws.avg - prevAvg > 0 ? "+" : "") + fmtN(ws.avg - prevAvg, 2) : "n/a", "kg vs last week")}${tileS(tonnage ? fmtN(tonnage / 1000, 1) + " t" : "n/a", `volume load, week ${wi + 1}`)}</div>`;
+  const ws = weekStats(b, wi, ckDates(b, wi)), prevAvg = avgWeight(ckDates(b, wi - 1));
+  h += `<div class="tiles">${tileS(`${done}/${due}`, "sessions done so far")}${tileS(ws.avg ? fmtN(ws.avg, 1) : "n/a", `avg kg, 7 days to ${fmtShort(ckDate(b, wi))}`)}${tileS(ws.avg && prevAvg ? signed(ws.avg - prevAvg, 2) : "n/a", "kg vs last check-in")}${tileS(tonnage ? fmtN(tonnage / 1000, 1) + " t" : "n/a", `volume load, week ${wi + 1}`)}</div>`;
   h += `<div class="card"><label class="f" style="margin:0"><span>Week shown</span><select data-act="ins-week">${b.weeks.map((w, i) => `<option value="${i}" ${i === wi ? "selected" : ""}>Week ${i + 1}, w/c ${fmtShort(weekDates(b, i)[0])}${w.deload ? " (deload)" : ""}</option>`).join("")}</select></label></div>`;
   // decision
   const dec = decision(b, wi);
@@ -559,7 +629,7 @@ function viewInsights() {
   const vol = volumeFor(b, wi), tg = b.volumeTargets || {}, maxV = Math.max(1, ...Object.keys(tg).map(k => Math.max(tg[k], vol[k] || 0)));
   h += `<div class="card"><h3>Working sets per muscle, week ${wi + 1}</h3><div class="muted small" style="margin-bottom:8px">Bar is sets logged, white line is the plan target.</div>${Object.keys(tg).map(k => `<div class="bar"><span>${esc(k)}</span><span class="track"><span class="fill" style="width:${(vol[k] || 0) / maxV * 100}%"></span><span class="tgt" style="left:calc(${tg[k] / maxV * 100}% - 1px)"></span></span><span class="n" style="text-align:right">${vol[k] || 0}/${tg[k]}</span></div>`).join("")}</div>`;
   // progression table
-  const exs = []; for (const d of b.days) for (const ex of d.exercises) exs.push(ex);
+  const exs = []; for (const d of b.days) for (const ex of d.exercises) { const p = permSwap(b, d.dow, ex.name, today); exs.push(p ? { ...ex, name: p.name } : ex); }
   const nextDates = {}; for (const d of b.days) nextDates[d.dow] = d;
   h += `<div class="card"><h3>Progression, next session</h3><table><tr><th>Exercise</th><th>Status</th><th class="n">e1RM change</th></tr>${exs.map(ex => {
     const nd = nextDateFor(b, ex.name), ctx = nd ? ctxFor(nd) : null, p = progression(ex, nd || addDays(today, 1), ctx);
@@ -574,7 +644,21 @@ function viewInsights() {
   h += `<div class="card"><h3>Estimated 1RM trend</h3><select data-act="ins-ex-sel" style="margin-bottom:8px">${allNames.map(n => `<option ${n === exName ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>
     <div class="muted small" style="margin-bottom:6px">Epley on the best working set, with RIR added to reps. All blocks.</div>${lineChart([{ name: exName, color: "var(--series-1)", pts, dots: true }], { unit: " kg", dec: 1, what: "loaded sessions", label: "Estimated 1RM for " + exName })}</div>`;
   // adherence table
-  h += `<div class="card"><h3>Adherence by week</h3><table><tr><th>Wk</th><th class="n">Weights</th><th class="n">AM</th><th class="n">Meals</th><th class="n">Steps</th><th class="n">Avg kg</th></tr>${b.weeks.map((w, i) => { const s = weekStats(b, i); return `<tr><td>${i + 1}</td><td class="n">${s.weights}/${s.weightsWant}</td><td class="n">${s.am}/${s.amWant}</td><td class="n">${s.meals}/${s.mealsWant}</td><td class="n">${s.steps}/7</td><td class="n">${s.avg ? fmtN(s.avg, 1) : "n/a"}</td></tr>`; }).join("")}</table></div>`;
+  h += `<div class="card"><h3>Adherence by check-in period</h3><div class="muted small" style="margin-bottom:6px">Each period is the 7 days ending on check-in day.</div><table><tr><th>To</th><th class="n">Weights</th><th class="n">AM</th><th class="n">Meals</th><th class="n">Steps</th><th class="n">Avg kg</th></tr>${b.weeks.map((w, i) => { const s = weekStats(b, i, ckDates(b, i)); return `<tr><td>${fmtShort(ckDate(b, i))}</td><td class="n">${s.weights}/${s.weightsWant}</td><td class="n">${s.am}/${s.amWant}</td><td class="n">${s.meals}/${s.mealsWant}</td><td class="n">${s.steps}/7</td><td class="n">${s.avg ? fmtN(s.avg, 1) : "n/a"}</td></tr>`; }).join("")}</table></div>`;
+  // recovery scores
+  const rDates = []; for (let d = addDays(b.startDate, -14); d <= blockEnd(b) && d <= today; d = addDays(d, 1)) rDates.push(d);
+  const sc = { bb: "var(--series-1)", sleepScore: "var(--series-2)", readiness: "var(--series-3)" };
+  h += `<div class="card"><h3>Recovery scores</h3><div class="muted small" style="margin-bottom:6px">Morning Body Battery, sleep score and Training Readiness.</div>${lineChart(SCORES.map(k => ({ name: SCORE_NAMES[k], color: sc[k], dots: true, pts: rDates.filter(d => (S.daily.get(d) || {})[k] != null).map(d => ({ x: d, y: S.daily.get(d)[k] })) })), { dec: 0, yMin: 0, yMax: 100, what: "mornings", label: "Recovery scores" })}
+    <table style="margin-top:12px"><tr><th>To</th><th class="n">Battery</th><th class="n">Sleep</th><th class="n">Readiness</th><th class="n">Int. min</th></tr>${b.weeks.map((w, i) => { const ds = ckDates(b, i), ck = S.checkins.get(`${b.id}|${i}`); const f = k => { const a = avgField(ds, k); return a == null ? "n/a" : Math.round(a); };
+      return `<tr><td>${fmtShort(ckDate(b, i))}</td><td class="n">${f("bb")}</td><td class="n">${f("sleepScore")}</td><td class="n">${f("readiness")}</td><td class="n">${ck && ck.im != null ? ck.im : "n/a"}</td></tr>`; }).join("")}</table>
+    <div class="muted small" style="margin-top:6px">Scores are 7 day averages to each check-in. Intensity minutes target ${b.imTarget || 150} a week.</div></div>`;
+  // measurements
+  const mk = cur.insMeas || "waist", ms = measSeries(mk);
+  const inBlock = k => measSeries(k).filter(p => p.x >= b.startDate && p.x <= blockEnd(b));
+  h += `<div class="card"><h3>Measurements</h3><table><tr><th></th><th class="n">First</th><th class="n">Latest</th><th class="n">Change</th></tr>${MEAS.map(([k, label]) => { const a = inBlock(k); if (!a.length) return ""; const f = a[0].y, l = a[a.length - 1].y;
+      return `<tr><td><a href="#" data-act="ins-meas" data-k="${k}">${label}</a></td><td class="n">${fmtN(f)}</td><td class="n">${fmtN(l)}</td><td class="n">${a.length > 1 ? signed(l - f) : ""}</td></tr>`; }).join("") || `<tr><td colspan="4" class="muted">No measurements in this block yet. They're entered on the Thursday check-in.</td></tr>`}</table>
+    <select data-act="ins-meas-sel" style="margin:12px 0 8px">${MEAS.map(([k, l]) => `<option value="${k}" ${k === mk ? "selected" : ""}>${l}</option>`).join("")}</select>
+    ${lineChart([{ name: MEAS.find(x => x[0] === mk)[1], color: "var(--series-1)", pts: ms, dots: true }], { unit: " " + mUnit(mk), dec: 1, what: "check-ins", label: "Measurement trend" })}</div>`;
   // recovery ratings
   const rk = b.weeks.map((_, i) => S.checkins.get(`${b.id}|${i}`)).filter(Boolean);
   if (rk.length) h += `<div class="card"><h3>How it felt</h3><table><tr><th></th>${b.weeks.map((_, i) => `<th class="n">W${i + 1}</th>`).join("")}</tr>${RATINGS.map(r => `<tr><td class="small">${r}</td>${b.weeks.map((_, i) => { const ck = S.checkins.get(`${b.id}|${i}`); return `<td class="n">${ck && ck.ratings && ck.ratings[r] || ""}</td>`; }).join("")}</tr>`).join("")}</table></div>`;
@@ -582,20 +666,22 @@ function viewInsights() {
 }
 function nextDateFor(b, exName) {
   const today = todayIso();
-  for (let d = today > b.startDate ? today : b.startDate; d <= blockEnd(b); d = addDays(d, 1)) { const c = ctxFor(d); if (c && c.block.id === b.id && c.day.exercises.some(e => e.name === exName) && !workSets(setsOn(d, exName)).length) return d; }
+  for (let d = today > b.startDate ? today : b.startDate; d <= blockEnd(b); d = addDays(d, 1)) { const c = ctxFor(d); if (c && c.block.id === b.id && dayExercises(d, c).some(e => e.name === exName) && !workSets(setsOn(d, exName)).length) return d; }
   return null;
 }
 
 /* ---------- views: more, history, blocks ---------- */
 function viewMore() {
   const lb = meta("lastBackup");
+  const preview = TARGET === "artifact" ? `<div class="card"><h3>Preview build</h3><p class="small">This is the development copy that runs inside Claude. ${MEMORY_ONLY ? "Storage is blocked here, so data lasts until you close it." : "Data entered here stays in this browser only, is separate from the app on your phone, and can be cleared."} Use it to try changes, not to keep your real logs.</p>
+    <div class="btnrow"><button data-act="demo">Load demo data</button><button class="danger" data-act="wipe">Reset preview</button></div></div>` : "";
   const days = lb ? diffDays(todayIso(), lb.slice(0, 10)) : null;
-  return `<div class="card"><h3>Training blocks</h3><p class="muted small">Add future blocks, clone this one forward, or edit exercises and meals.</p><a class="btn primary" href="#/blocks">Manage blocks</a></div>
+  return preview + `<div class="card"><h3>Exercise catalogue</h3><p class="muted small">Over 800 exercises with instructions and photos. Search by muscle or equipment.</p><a class="btn primary" href="#/catalog">Browse exercises</a></div><div class="card"><h3>Training blocks</h3><p class="muted small">Add future blocks, clone this one forward, or edit exercises and meals.</p><a class="btn primary" href="#/blocks">Manage blocks</a></div>
   <div class="card"><h3>History</h3><p class="muted small">Every logged session. Open to edit, or delete a day's log.</p><a class="btn" href="#/history">Open history</a></div>
   <div class="card"><h3>Backup</h3><p class="small ${days == null || days > 7 ? "" : "muted"}">${lb ? `Last backup ${days === 0 ? "today" : days + " days ago"}.` : "No backup yet."} Data lives on this phone only, so back up weekly.</p>
-    <div class="btnrow"><button class="primary" data-act="backup">Back up now</button><button data-act="restore">Restore</button><button data-act="csv">Export sets as CSV</button></div></div>
+    <div class="btnrow"><button class="primary" data-act="backup">Back up now</button><button data-act="restore">Restore</button><button data-act="csv">Export sets as CSV</button><button data-act="csv-ck">Export check-ins as CSV</button><button data-act="csv-daily">Export daily log as CSV</button></div></div>
   <div class="card"><h3>Settings</h3>${tickBtn(meta("beep", true), "set-beep", "", "Beep when rest ends")}<div style="height:6px"></div>${tickBtn(meta("vibrate", true), "set-vib", "", "Vibrate when rest ends")}</div>
-  <div class="card"><h3>Install</h3><p class="small muted">In Chrome on Android, open the menu and choose Add to home screen (or Install app). It then runs full screen and works offline.</p></div>
+  ${NATIVE ? `<div class="card"><h3>App version</h3><p class="small muted">Installed Android app. Data lives inside the app, so back up before uninstalling it.</p></div>` : `<div class="card"><h3>Install</h3><p class="small muted">In Chrome on Android, open the menu and choose Add to home screen (or Install app). It then runs full screen and works offline. An APK version can also be built from your GitHub repo, see the README.</p></div>`}
   <div class="card"><button class="danger" data-act="wipe">Delete all data</button></div>`;
 }
 function viewHistory() {
@@ -622,7 +708,7 @@ function viewBlocks() {
 }
 
 /* ---------- block editor ---------- */
-const MUSCLES = ["Chest", "Back", "Quads", "Hamstrings", "Glutes", "Front delts", "Side delts", "Rear delts", "Biceps", "Triceps", "Calves", "Abs"];
+const MUSCLES = ["Chest", "Back", "Quads", "Hamstrings", "Glutes", "Front delts", "Side delts", "Rear delts", "Biceps", "Triceps", "Calves", "Abs", "Lower back", "Traps", "Forearms", "Neck", "Adductors", "Abductors"];
 function viewEdit(id) {
   if (!cur.draft || cur.draft.id !== id) { const b = S.blocks.get(id); if (!b) return noBlocks(); cur.draft = clone(b); }
   const b = cur.draft, n = b.nutrition = b.nutrition || { meals: [], notes: [] };
@@ -630,7 +716,9 @@ function viewEdit(id) {
   const ta = (p, v, l, t = "lines") => `<label class="f"><span>${l}</span><textarea data-p="${p}" data-t="${t}">${esc(Array.isArray(v) ? v.join("\n") : v || "")}</textarea></label>`;
   const cb = (p, v, l) => `<label class="chk"><input type="checkbox" data-p="${p}" data-t="bool" ${v ? "checked" : ""}>${l}</label>`;
   let h = `<datalist id="muscles">${MUSCLES.map(m => `<option>${m}</option>`).join("")}</datalist>
-  <div class="card"><h3>Block</h3>${inp("name", b.name, "Name")}${inp("startDate", b.startDate, "Start date (a Monday)", "text")}<div class="muted small">Format YYYY-MM-DD. Runs to ${esc(isValidDate(b.startDate) ? fmtDate(blockEnd(b)) : "?")}.</div></div>`;
+  <div class="card"><h3>Block</h3>${inp("name", b.name, "Name")}${inp("startDate", b.startDate, "Start date (a Monday)", "text")}<div class="muted small">Format YYYY-MM-DD. Runs to ${esc(isValidDate(b.startDate) ? fmtDate(blockEnd(b)) : "?")}.</div>
+  ${inp("imTarget", b.imTarget ?? 150, "Weekly intensity minutes target", "num", "numeric")}
+  <label class="f" style="margin-top:10px"><span>Weekly check-in day</span><select data-p="checkinDow" data-t="num">${[1, 2, 3, 4, 5, 6, 7].map(d => `<option value="${d}" ${ckDow(b) === d ? "selected" : ""}>${["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][d - 1]}</option>`).join("")}</select></label></div>`;
   h += `<div class="card"><h3>Weeks</h3>${b.weeks.map((w, i) => `<div class="edit-ex"><b>Week ${i + 1}</b><div class="grid2">${inp(`weeks.${i}.rir`, w.rir, "Target RIR")}${inp(`weeks.${i}.note`, w.note, "Note")}</div>${cb(`weeks.${i}.dropSets`, w.dropSets, "Drop sets")}${cb(`weeks.${i}.deload`, w.deload, "Deload")}<button class="danger" data-act="ed-delweek" data-i="${i}">Remove week</button></div>`).join("")}<button data-act="ed-addweek">+ Add week</button></div>`;
   b.days.sort((a, z) => a.dow - z.dow).forEach((d, di) => {
     h += `<details class="card"><summary>${DOW[d.dow % 7]}: ${esc(d.pm || "Rest")} <span class="muted small">(${d.exercises.length} exercises)</span></summary><div style="margin-top:10px">
@@ -641,8 +729,8 @@ function viewEdit(id) {
     ${d.exercises.map((e, ei) => { const P = `days.${di}.exercises.${ei}`; return `<div class="edit-ex"><div class="grid4"><div>${inp(P + ".group", e.group, "Group")}</div><div style="grid-column:span 3">${inp(P + ".name", e.name, "Exercise")}</div></div>
       <div class="grid4">${inp(P + ".sets", e.sets, "Sets", "num", "numeric")}${inp(P + ".repMin", e.repMin, "Rep min", "num", "numeric")}${inp(P + ".repMax", e.repMax, "Rep max", "num", "numeric")}${inp(P + ".rest", e.rest, "Rest s", "num", "numeric")}</div>
       ${inp(P + ".cue", e.cue, "Cue")}<div class="grid3"><label class="f"><span>Muscle</span><input list="muscles" data-p="${P}.muscle" data-t="text" value="${esc(e.muscle || "")}"></label><label class="f"><span>Also counts for</span><input list="muscles" data-p="${P}.muscle2" data-t="text" value="${esc(e.muscle2 || "")}"></label>${inp(P + ".repNote", e.repNote, "Rep note")}</div>
-      ${cb(P + ".drop", e.drop, "Drop set on final set (in drop set weeks)")}<div class="btnrow" style="margin-top:4px"><button data-act="ed-mv" data-d="${di}" data-i="${ei}" data-dir="-1">↑</button><button data-act="ed-mv" data-d="${di}" data-i="${ei}" data-dir="1">↓</button><button class="danger" data-act="ed-delex" data-d="${di}" data-i="${ei}">Remove</button></div></div>`; }).join("")}
-    <button data-act="ed-addex" data-d="${di}">+ Add exercise</button></div></details>`;
+      ${cb(P + ".drop", e.drop, "Drop set on final set (in drop set weeks)")}${catFor(e) ? `<div class="muted small">Catalogue: ${esc(catFor(e).n)}</div>` : ""}<div class="btnrow" style="margin-top:4px"><button data-act="ed-mv" data-d="${di}" data-i="${ei}" data-dir="-1">↑</button><button data-act="ed-mv" data-d="${di}" data-i="${ei}" data-dir="1">↓</button><button class="danger" data-act="ed-delex" data-d="${di}" data-i="${ei}">Remove</button></div></div>`; }).join("")}
+    <div class="btnrow"><button data-act="ed-catex" data-d="${di}">+ Add from catalogue</button><button data-act="ed-addex" data-d="${di}">+ Add blank exercise</button></div></div></details>`;
   });
   h += `<details class="card"><summary>Meal plan</summary><div style="margin-top:10px"><div class="grid3">${inp("nutrition.kcal", n.kcal, "kcal", "num", "numeric")}${inp("nutrition.protein", n.protein, "Protein g", "num", "numeric")}${inp("nutrition.carbs", n.carbs, "Carbs g", "num", "numeric")}${inp("nutrition.fat", n.fat, "Fat g", "num", "numeric")}${inp("nutrition.fibre", n.fibre, "Fibre g", "num", "numeric")}${inp("nutrition.stepsTarget", n.stepsTarget, "Steps target", "num", "numeric")}${inp("nutrition.weeklyTargetMin", n.weeklyTargetMin, "Loss/wk min kg", "num", "decimal")}${inp("nutrition.weeklyTargetMax", n.weeklyTargetMax, "Loss/wk max kg", "num", "decimal")}</div>
     ${n.meals.map((m, i) => `<div class="edit-ex"><div class="grid3">${inp(`nutrition.meals.${i}.time`, m.time, "Time")}<div style="grid-column:span 2">${inp(`nutrition.meals.${i}.name`, m.name, "Meal")}</div></div>${inp(`nutrition.meals.${i}.note`, m.note, "Note")}${ta(`nutrition.meals.${i}.items`, m.items, "Items (one per line)")}
@@ -670,6 +758,7 @@ function normaliseBlock(b) {
   const days = []; for (let d = 1; d <= 7; d++) { const x = (b.days || []).find(y => y.dow === d) || { dow: d, am: "", pm: "Rest", type: "rest" }; days.push({ warmup: [], cooldown: [], notes: [], checklist: [], amCardio: false, ...x, exercises: (x.exercises || []).map(e => ({ group: "", cue: "", muscle: "", drop: false, rest: 0, ...e, sets: Number(e.sets), repMin: Number(e.repMin), repMax: Number(e.repMax), rest: Number(e.rest || 0) })) }); }
   b.days = days; b.rules = b.rules || []; b.keyLifts = b.keyLifts || []; b.volumeTargets = b.volumeTargets || {};
   b.nutrition = { meals: [], notes: [], ...(b.nutrition || {}) };
+  b.checkinDow = Number(b.checkinDow) || 4;
   return b;
 }
 
@@ -686,11 +775,142 @@ function ask(title, fields, okLabel = "OK") {
 }
 const confirmAsk = async t => !!(await ask(t, [], "Yes, go ahead"));
 
+/* ---------- exercise catalogue ---------- */
+let CAT = null, CATP = null;
+function loadCat() {
+  if (CAT) return Promise.resolve(CAT);
+  if (!CATP) CATP = fetch("catalog.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
+    j.byId = new Map(j.ex.map(e => [e.i, e])); j.byName = new Map(j.ex.map(e => [e.n.toLowerCase(), e])); CAT = j; return j;
+  }).catch(e => { CATP = null; throw e; });
+  return CATP;
+}
+function catFor(ex) { if (!CAT || !ex) return null; return (ex.cat && CAT.byId.get(ex.cat)) || CAT.byName.get(String(ex.name).toLowerCase()) || null; }
+const catWords = q => String(q || "").toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+function catSearch(q, opts = {}) {
+  const words = catWords(q), mus = opts.muscle, cat = opts.category, g = opts.group, eq = opts.equip;
+  const known = opts.known || new Set();
+  return CAT.ex.filter(e => (!g || e.g === g) && (!eq || e.e === eq) && (!cat || e.c === cat) && words.every(w => (e.n.toLowerCase() + " " + e.e + " " + e.g.toLowerCase()).includes(w)))
+    .map(e => ({ e, score: (mus && e.g === mus ? 100 : 0) + (known.has(e.n.toLowerCase()) ? 30 : 0) + (e.c === "strength" ? 20 : 0) + (words.length && e.n.toLowerCase().startsWith(words[0]) ? 5 : 0) }))
+    .sort((a, z) => z.score - a.score || a.e.n.localeCompare(z.e.n)).map(x => x.e);
+}
+function knownNames() { const k = new Set(); for (const b of S.blocks.values()) for (const d of b.days) for (const e of d.exercises) { k.add(e.name.toLowerCase()); const c = catFor(e); if (c) k.add(c.n.toLowerCase()); } for (const n of exIndex().keys()) k.add(n.toLowerCase()); return k; }
+const catRow = (e, attr, on) => `<button class="tickitem ${on ? "on" : ""}" ${attr} style="padding:9px 10px;margin-bottom:6px"><span class="t"><b>${esc(e.n)}</b><div class="muted small">${esc(e.g)}${e.e ? " · " + esc(e.e) : ""}${e.c !== "strength" ? " · " + esc(e.c) : ""}</div></span></button>`;
+
+// shared picker: swap and "add from catalogue"
+async function pickExercise({ title, intro, muscle, orig, current, scope, okLabel }) {
+  try { await loadCat(); } catch (e) { toast("Couldn't load the exercise catalogue"); }
+  return new Promise(res => {
+    const m = $("#modal"), sh = $("#modal-sheet"), known = knownNames();
+    let sel = null, sc = "today";
+    sh.innerHTML = `<h3>${esc(title)}</h3>${intro ? `<p class="small muted">${intro}</p>` : ""}
+      ${orig && orig !== current ? `<button class="tickitem" id="pk-orig" style="margin-bottom:8px"><span class="t">Back to the planned ${esc(orig)}</span></button>` : ""}
+      <input id="pk-q" placeholder="Search ${CAT ? CAT.ex.length : ""} exercises" autocomplete="off" style="margin-bottom:8px">
+      <div id="pk-list" style="max-height:40vh;overflow:auto"></div>
+      ${scope ? `<div class="rate" style="margin-top:8px"><button id="pk-today" class="on">Just today</button><button id="pk-block">Rest of this block</button></div>` : ""}
+      <div class="btnrow"><button class="primary" id="m-ok">${esc(okLabel || "Choose")}</button><button id="m-cancel">Cancel</button></div>`;
+    m.style.display = "flex";
+    const list = () => {
+      const q = $("#pk-q").value.trim(); let h = "";
+      if (q && !(CAT && CAT.byName.has(q.toLowerCase()))) h += `<button class="tickitem ${sel && sel.custom ? "on" : ""}" data-custom="1" style="padding:9px 10px;margin-bottom:6px"><span class="t">Use "<b>${esc(q)}</b>" as a custom exercise</span></button>`;
+      if (CAT) { const r = catSearch(q, { muscle, known }).filter(e => e.n !== current); h += (muscle && !q ? `<div class="muted small" style="margin:4px 0 6px">${esc(muscle)} first. Type to search everything.</div>` : "") + r.slice(0, 40).map(e => catRow(e, `data-cid="${esc(e.i)}"`, sel && sel.cat === e.i)).join("") + (r.length > 40 ? `<div class="muted small">${r.length - 40} more, refine the search</div>` : ""); }
+      $("#pk-list").innerHTML = h;
+    };
+    list();
+    $("#pk-q").oninput = () => { sel = null; list(); };
+    $("#pk-list").onclick = e => {
+      const b = e.target.closest("button"); if (!b) return;
+      if (b.dataset.custom) sel = { name: $("#pk-q").value.trim(), custom: true, group: muscle || "" };
+      else { const c = CAT.byId.get(b.dataset.cid); sel = { name: c.n, cat: c.i, group: c.g }; }
+      list();
+    };
+    if ($("#pk-orig")) $("#pk-orig").onclick = () => done({ name: orig, scope: sc });
+    if (scope) { $("#pk-today").onclick = () => { sc = "today"; $("#pk-today").classList.add("on"); $("#pk-block").classList.remove("on"); }; $("#pk-block").onclick = () => { sc = "block"; $("#pk-block").classList.add("on"); $("#pk-today").classList.remove("on"); }; }
+    const done = v => { m.style.display = "none"; res(v); };
+    $("#m-ok").onclick = () => { if (!sel || !sel.name) return toast("Pick an exercise first"); done({ ...sel, scope: sc }); };
+    $("#m-cancel").onclick = () => done(null);
+  });
+}
+function swapModal(current, orig, muscle) {
+  return pickExercise({ title: `Swap ${current}`, intro: `Kit taken or broken? Sets, reps, rest and superset stay the same, and progression follows the new exercise's own history.`, muscle, orig, current, scope: true, okLabel: "Swap" });
+}
+
+/* ---------- views: catalogue ---------- */
+const CATS = { q: "", g: "", e: "", c: "strength", n: 60 };
+function viewCatalog() {
+  if (!CAT) { loadCat().then(() => render(true)).catch(() => { $("#view").innerHTML = `<div class="card"><h3>Couldn't load the catalogue</h3><p class="muted">Check your connection and try again. Once loaded it works offline.</p></div>`; }); return `<div class="card muted">Loading the exercise catalogue…</div>`; }
+  const opts = (arr, v, all) => `<option value="">${all}</option>` + arr.map(x => `<option ${x === v ? "selected" : ""}>${esc(x)}</option>`).join("");
+  const groups = [...new Set(CAT.ex.map(e => e.g))].sort(), eqs = [...new Set(CAT.ex.map(e => e.e).filter(Boolean))].sort(), cats = [...new Set(CAT.ex.map(e => e.c))].sort();
+  return `<div class="card"><input id="cat-q" data-act="cat-q" placeholder="Search ${CAT.ex.length} exercises" value="${esc(CATS.q)}" autocomplete="off">
+    <div class="grid3" style="margin-top:8px"><select data-act="cat-f" data-k="g">${opts(groups, CATS.g, "All muscles")}</select><select data-act="cat-f" data-k="e">${opts(eqs, CATS.e, "All equipment")}</select><select data-act="cat-f" data-k="c">${opts(cats, CATS.c, "All types")}</select></div></div>
+    <div id="cat-list">${catListHtml()}</div>
+    <p class="muted small">Exercise data and photos: Free Exercise DB by yuhonas, public domain.</p>`;
+}
+function catListHtml() {
+  const r = catSearch(CATS.q, { group: CATS.g, equip: CATS.e, category: CATS.c, known: knownNames() });
+  if (!r.length) return `<div class="card muted">No matches. Try fewer words or clear a filter.</div>`;
+  return `<div class="muted small" style="margin:0 0 6px">${r.length} exercise${r.length === 1 ? "" : "s"}</div>` + r.slice(0, CATS.n).map(e => catRow(e, `data-act="cat-open" data-id="${esc(e.i)}"`)).join("") +
+    (r.length > CATS.n ? `<button data-act="cat-more" style="width:100%">Show more</button>` : "");
+}
+function viewExercise(id) {
+  if (!CAT) { loadCat().then(() => render(true)).catch(() => toast("Couldn't load the catalogue")); return `<div class="card muted">Loading…</div>`; }
+  const e = CAT.byId.get(id); if (!e) return `<div class="card">Exercise not found.</div>`;
+  const usedAs = []; for (const b of S.blocks.values()) for (const d of b.days) for (const x of d.exercises) if (catFor(x) === e && !usedAs.includes(x.name)) usedAs.push(x.name);
+  const names = [...new Set([e.n, ...usedAs])], hist = [];
+  for (const n of names) { const m = exIndex().get(n); if (m) for (const [d, ss] of m) { const t = topSet(ss); if (t) hist.push({ d, t, n }); } }
+  hist.sort((a, z) => z.d.localeCompare(a.d));
+  const pics = TARGET === "pwa" ? `<div class="grid2" style="margin:10px 0">${e.img.map((p, i) => `<img src="${esc(CAT.imgBase + p)}" alt="${esc(e.n)}, ${i ? "end" : "start"} position" loading="lazy" style="width:100%;border-radius:10px;background:#fff;aspect-ratio:4/3;object-fit:cover">`).join("")}</div>` : `<div class="note small">Photos show in the phone app. The preview inside Claude can't load images from other sites.</div>`;
+  return `<button data-act="back" style="margin-bottom:10px">‹ Back</button><div class="card"><h2>${esc(e.n)}</h2><div class="chips"><span class="chip">${esc(e.g)}</span>${e.e ? `<span class="chip">${esc(e.e)}</span>` : ""}<span class="chip">${esc(e.l)}</span>${e.m ? `<span class="chip">${esc(e.m)}</span>` : ""}${e.c !== "strength" ? `<span class="chip">${esc(e.c)}</span>` : ""}</div>
+    ${pics}<div class="small"><b>Primary:</b> ${esc(e.p.join(", "))}${e.s.length ? `<br><b>Secondary:</b> ${esc(e.s.join(", "))}` : ""}</div>
+    ${usedAs.length ? `<div class="small" style="margin-top:6px"><b>In your plan as:</b> ${esc(usedAs.join(", "))}</div>` : ""}</div>
+    <div class="card"><h3>How to do it</h3><ol style="margin:0;padding-left:20px">${e.ins.map(x => `<li style="margin-bottom:6px">${esc(x)}</li>`).join("")}</ol></div>
+    ${hist.length ? `<div class="card"><h3>Your recent best sets</h3><table>${hist.slice(0, 6).map(h => `<tr><td>${fmtShort(h.d)}</td><td class="small muted">${esc(h.n)}</td><td class="n">${fmtN(h.t.kg)} × ${h.t.reps}</td></tr>`).join("")}</table></div>` : ""}
+    <p class="muted small">Exercise data and photos: Free Exercise DB by yuhonas, public domain.</p>`;
+}
+async function moveSets(date, from, to) {
+  if (from === to) return;
+  for (const s of [...S.sets.values()]) if (s.date === date && s.ex === from) { await remove("sets", s.id); const id = setId(date, to, s.kind, s.n); await save("sets", { ...s, id, ex: to }); }
+}
+async function applySwap(date, orig, current, name, scope, cat) {
+  const c = ctxFor(date); if (!c) return;
+  await moveSets(date, current, name);
+  await updSession(date, s => { if (s.swaps) delete s.swaps[orig]; if (s.swapCat) delete s.swapCat[orig]; if (scope === "today" && name !== orig) { s.swaps = s.swaps || {}; s.swaps[orig] = name; if (cat) { s.swapCat = s.swapCat || {}; s.swapCat[orig] = cat; } } });
+  if (scope === "block" || name === orig) {
+    const b = clone(c.block); b.swaps = b.swaps || {}; const key = `${c.day.dow}|${orig}`, p = b.swaps[key];
+    if (name === orig) { if (p && p.from < date) p.to = addDays(date, -1); else delete b.swaps[key]; }
+    else b.swaps[key] = cat ? { name, from: date, cat } : { name, from: date };
+    await save("blocks", b);
+  }
+}
+
 /* ---------- files ---------- */
-function download(name, text, type = "application/json") {
+async function download(name, text, type = "application/json") {
+  if (TARGET === "artifact") {
+    if (DL) { try { await DL.save({ filename: name, data: text }); toast("Saved"); return true; } catch (e) { if (e && e.code === "declined") { toast("Save cancelled"); return false; } } }
+    return copyFallback(name, text);
+  }
+  if (NATIVE) {
+    const fs = plugin("Filesystem"), sh = plugin("Share");
+    if (fs && sh) {
+      try {
+        const w = await fs.writeFile({ path: name, data: text, directory: "CACHE", encoding: "utf8" });
+        await sh.share({ title: name, dialogTitle: "Save or send " + name, files: [w.uri] });
+        return true;
+      } catch (e) { if (/cancel/i.test(String(e && (e.message || e)))) return false; toast("Couldn't share the file"); return copyFallback(name, text); }
+    }
+    return copyFallback(name, text);
+  }
   const blob = new Blob([text], { type }), file = new File([blob], name, { type });
-  if (navigator.canShare && navigator.canShare({ files: [file] }) && /Android|iPhone/i.test(navigator.userAgent)) { navigator.share({ files: [file], title: name }).catch(() => dl(blob, name)); return; }
-  dl(blob, name);
+  if (navigator.canShare && navigator.canShare({ files: [file] }) && /Android|iPhone/i.test(navigator.userAgent)) { try { await navigator.share({ files: [file], title: name }); return true; } catch (e) { if (e && e.name === "AbortError") return false; } }
+  dl(blob, name); return true;
+}
+function copyFallback(name, text) {
+  return new Promise(res => {
+    const m = $("#modal"), sh = $("#modal-sheet");
+    sh.innerHTML = `<h3>${esc(name)}</h3><p class="small muted">Saving files isn't available here. Copy this and paste it into a file instead.</p><textarea readonly style="min-height:200px;font-size:12px">${esc(text)}</textarea><div class="btnrow"><button class="primary" id="m-copy">Copy</button><button id="m-cancel">Close</button></div>`;
+    m.style.display = "flex";
+    $("#m-copy").onclick = () => navigator.clipboard.writeText(text).then(() => toast("Copied")).catch(() => { sh.querySelector("textarea").select(); toast("Select all and copy"); });
+    $("#m-cancel").onclick = () => { m.style.display = "none"; res(false); };
+  });
 }
 function dl(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); }
 function pickFile() { return new Promise(res => { const i = document.createElement("input"); i.type = "file"; i.accept = ".json,application/json"; i.onchange = () => { const f = i.files[0]; if (!f) return res(null); f.text().then(res); }; i.click(); }); }
@@ -705,7 +925,7 @@ function tickTimer() {
   $("#timer-l").textContent = left > 0 ? "Rest · next: " + timer.label : "Go: " + timer.label;
   if (left <= 0 && !timer.fired) {
     timer.fired = true; $("#timer").classList.add("over");
-    if (meta("vibrate", true) && navigator.vibrate) navigator.vibrate([250, 120, 250]);
+    if (meta("vibrate", true)) { const hp = plugin("Haptics"); if (hp) { hp.vibrate({ duration: 300 }).catch(() => { }); setTimeout(() => hp.vibrate({ duration: 300 }).catch(() => { }), 450); } else if (navigator.vibrate) navigator.vibrate([250, 120, 250]); }
     if (meta("beep", true)) beep();
   }
   if (left < -90) stopTimer();
@@ -736,14 +956,26 @@ function nextLabel(card) {
 document.addEventListener("change", async e => {
   const t = e.target;
   if (t.closest(".row") && t.dataset.f) return saveRow(t.closest(".row"));
-  if (t.dataset.daily) { const k = t.dataset.daily; return updDaily(cur.date, d => d[k] = k === "notes" ? t.value : num(t.value)); }
+  if (t.dataset.daily) {
+    const k = t.dataset.daily, v = k === "notes" ? t.value : num(t.value);
+    if (SCORES.includes(k) && v != null && (v < 0 || v > 100 || !Number.isInteger(v))) { toast("Scores are whole numbers from 0 to 100"); t.value = (S.daily.get(cur.date) || {})[k] ?? ""; return; }
+    return updDaily(cur.date, d => d[k] = v);
+  }
   if (t.dataset.ses) { const k = t.dataset.ses; return updSession(cur.date, s => s[k] = k === "comments" ? t.value : num(t.value)); }
-  if (t.dataset.ck) { const id = currentRoute.split("/").slice(1).join("|"); const k = t.dataset.ck; await updCheckin(id, s => s[k] = k === "notes" ? t.value : num(t.value)); if (k === "waist") render(true); return; }
+  if (t.dataset.ck) {
+    const [, bid, wi] = currentRoute.split("/"), id = `${bid}|${wi}`, b = S.blocks.get(bid), k = t.dataset.ck;
+    if (k === "im") { const v = num(t.value); if (v != null && (v < 0 || v > 5000)) { toast("That doesn't look right"); return; } }
+    await updCheckin(id, s => { s.date = ckDate(b, Number(wi)); if (k.startsWith("m.")) { s.m = s.m || {}; s.m[k.slice(2)] = num(t.value); if (k === "m.waist") delete s.waist; } else s[k] = k === "notes" ? t.value : num(t.value); });
+    if (k === "im") { render(true); return; }
+    if (k.startsWith("m.")) { const mk = k.slice(2), el = document.querySelector(`.mchg[data-k="${mk}"]`); if (el) el.innerHTML = mChange(num(t.value), prevMeas(mk, ckDate(b, Number(wi)))); }
+    return;
+  }
   if (t.dataset.p && cur.draft) {
     const ty = t.dataset.t; let v = t.value;
     if (ty === "num") v = num(v); else if (ty === "bool") v = t.checked; else if (ty === "lines") v = v.split("\n").map(x => x.trim()).filter(Boolean);
     else if (ty === "targets") { const o = {}; for (const ln of v.split("\n")) { const m = ln.match(/^(.+?)\s*:\s*(\d+)/); if (m) o[m[1].trim()] = Number(m[2]); } v = o; }
     setPath(cur.draft, t.dataset.p, v);
+    if (/\.exercises\.\d+\.name$/.test(t.dataset.p)) { const ex = t.dataset.p.split(".").slice(0, -1).reduce((o, k) => o[k], cur.draft); const c = CAT && CAT.byName.get(String(v).toLowerCase()); if (c) ex.cat = c.i; else delete ex.cat; }
     if (/\.type$|startDate/.test(t.dataset.p)) render(true);
     return;
   }
@@ -751,16 +983,20 @@ document.addEventListener("change", async e => {
   if (act === "pick-block") { cur.blockId = t.value; cur.insWeek = null; render(); }
   if (act === "ins-week") { cur.insWeek = Number(t.value); render(true); }
   if (act === "ins-ex-sel") { cur.insEx = t.value; render(true); }
+  if (act === "ins-meas-sel") { cur.insMeas = t.value; render(true); }
+  if (act === "cat-f") { CATS[t.dataset.k] = t.value; CATS.n = 60; $("#cat-list").innerHTML = catListHtml(); }
 });
 
 document.addEventListener("click", async e => {
+  const link = e.target.closest('a[href^="#/"]');
+  if (link && TARGET !== "pwa") { e.preventDefault(); go(link.getAttribute("href")); return; }
   const el = e.target.closest("[data-act]"); if (!el || el.tagName === "SELECT") return;
   const act = el.dataset.act;
   if (el.tagName === "A") e.preventDefault();
   const date = cur.date, base = currentRoute.startsWith("food") ? "food" : "day";
   switch (act) {
-    case "day-prev": location.hash = `#/${base}/${addDays(date, -1)}`; break;
-    case "day-next": location.hash = `#/${base}/${addDays(date, 1)}`; break;
+    case "day-prev": go(`#/${base}/${addDays(date, -1)}`); break;
+    case "day-next": go(`#/${base}/${addDays(date, 1)}`); break;
     case "tick": {
       const row = el.closest(".row"), card = el.closest(".ex");
       // empty row: copy placeholders (same as last time) as a quick log
@@ -773,6 +1009,30 @@ document.addEventListener("click", async e => {
     }
     case "fill": { const card = el.closest(".ex"); for (const r of $$(".row", card)) { const k = r.querySelector('[data-f="kg"]'); if (k.value === "" && num(k.placeholder) != null) { k.value = k.placeholder; await saveRow(r); } } break; }
     case "addwarm": { const card = el.closest(".ex"), key = date + "|" + card.dataset.ex; cur.warm[key] = Math.max(cur.warm[key] || 0, $$(".row.warm", card).length) + 1; render(true); break; }
+    case "swap": {
+      const card = el.closest(".ex"), r = await swapModal(card.dataset.ex, card.dataset.orig, card.dataset.muscle);
+      if (!r) return; await applySwap(date, card.dataset.orig, card.dataset.ex, r.name, r.scope, r.cat);
+      toast(r.name === card.dataset.orig ? "Back to the plan" : `Swapped to ${r.name}${r.scope === "block" ? " for the rest of the block" : " for today"}`); render(true); break;
+    }
+    case "unswap": {
+      const card = el.closest(".ex"), orig = card.dataset.orig, curName = card.dataset.ex, c = ctxFor(date);
+      if (el.dataset.how === "today") {
+        const p = permSwap(c.block, c.day.dow, orig, date), target = p ? p.name : orig;
+        await moveSets(date, curName, target); await updSession(date, s => { if (s.swaps) delete s.swaps[orig]; });
+        toast(p ? `Back to ${target}` : "Back to the plan");
+      } else { await applySwap(date, orig, curName, orig, "block"); toast("Back to the plan"); }
+      render(true); break;
+    }
+    case "howto": go("#/ex/" + encodeURIComponent(el.dataset.id)); break;
+    case "cat-open": go("#/ex/" + encodeURIComponent(el.dataset.id)); break;
+    case "cat-more": CATS.n += 60; $("#cat-list").innerHTML = catListHtml(); break;
+    case "back": go("#/" + (cur.backTo && !cur.backTo.startsWith("ex/") ? cur.backTo : "catalog")); break;
+    case "ed-catex": {
+      const di = Number(el.dataset.d), r = await pickExercise({ title: "Add from catalogue", intro: "Pick an exercise. Sets, reps and rest default to 3 × 8 to 12 with 60s rest, so adjust them after.", okLabel: "Add" });
+      if (!r) return; const d = cur.draft.days[di];
+      d.exercises.push({ group: "", name: r.name, cat: r.cat, sets: 3, repMin: 8, repMax: 12, cue: "", muscle: MUSCLES.includes(r.group) ? r.group : "", drop: false, rest: 60 });
+      if (d.type !== "weights") d.type = "weights"; render(true); openDetails(di); break;
+    }
     case "rest": { const card = el.closest(".ex"); startRest(Number(card.dataset.rest), nextLabel(card)); break; }
     case "timer-add": if (timer) { timer.end += 15000; timer.fired = false; $("#timer").classList.remove("over"); } break;
     case "timer-stop": stopTimer(); break;
@@ -781,14 +1041,15 @@ document.addEventListener("click", async e => {
     case "protein": await updDaily(date, d => d.protein = !d.protein); render(true); break;
     case "meal": { const i = Number(el.dataset.i); await updDaily(date, d => { d.meals = d.meals || []; d.meals[i] = !d.meals[i]; }); render(true); break; }
     case "check": { const k = el.dataset.k; await updDaily(date, d => { d.checks = d.checks || {}; d.checks[k] = !d.checks[k]; }); render(true); break; }
-    case "ck-rate": { const id = currentRoute.split("/").slice(1).join("|"), k = el.dataset.k, v = Number(el.dataset.v); await updCheckin(id, s => { s.ratings = s.ratings || {}; s.ratings[k] = s.ratings[k] === v ? null : v; }); render(true); break; }
-    case "ck-photos": { const id = currentRoute.split("/").slice(1).join("|"); await updCheckin(id, s => s.photos = el.dataset.v === "1"); render(true); break; }
+    case "ck-rate": { const id = currentRoute.split("/").slice(1).join("|"), k = el.dataset.k, v = Number(el.dataset.v); await updCheckin(id, s => { s.date = ckDateOf(s); s.ratings = s.ratings || {}; s.ratings[k] = s.ratings[k] === v ? null : v; }); render(true); break; }
+    case "ck-photos": { const id = currentRoute.split("/").slice(1).join("|"); await updCheckin(id, s => { s.date = ckDateOf(s); s.photos = el.dataset.v === "1"; }); render(true); break; }
     case "ins-ex": cur.insEx = el.dataset.ex; render(true); setTimeout(() => { const s = $('[data-act="ins-ex-sel"]'); s && s.scrollIntoView({ behavior: "smooth", block: "center" }); }, 50); break;
+    case "ins-meas": cur.insMeas = el.dataset.k; render(true); break;
     case "set-beep": await setMeta("beep", !meta("beep", true)); render(true); break;
     case "set-vib": await setMeta("vibrate", !meta("vibrate", true)); render(true); break;
     case "backup": {
       const out = { app: "trainlog", version: 1, exported: new Date().toISOString() }; for (const k in STORES) out[k] = [...S[k].values()];
-      download(`training-log-backup-${todayIso()}.json`, JSON.stringify(out)); await setMeta("lastBackup", new Date().toISOString()); render(true); break;
+      if (await download(`training-log-backup-${todayIso()}.json`, JSON.stringify(out))) { await setMeta("lastBackup", new Date().toISOString()); render(true); } break;
     }
     case "restore": {
       const txt = await pickFile(); if (!txt) return; let data; try { data = JSON.parse(txt); } catch { return toast("That file isn't valid JSON"); }
@@ -803,7 +1064,24 @@ document.addEventListener("click", async e => {
       for (const s of [...S.sets.values()].sort((a, b) => a.date.localeCompare(b.date) || a.ex.localeCompare(b.ex) || KORDER[a.kind] - KORDER[b.kind] || a.n - b.n)) { const c = ctxFor(s.date); rows.push([s.date, c ? c.block.name : "", c ? c.day.pm : "", s.ex, { w: "warm-up", s: "working", d: "drop" }[s.kind], s.n, s.kg ?? "", s.reps ?? "", s.rir ?? "", s.kind === "s" ? r1(e1rm(s.kg, s.reps, s.rir)) || "" : ""]); }
       download(`training-sets-${todayIso()}.csv`, rows.map(r => r.map(v => /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : v).join(",")).join("\n"), "text/csv"); break;
     }
-    case "wipe": if (await confirmAsk("Delete every block, log and setting on this phone? Back up first if in doubt.")) { await clearAll(); await setMeta("seeded", true); toast("All data deleted"); location.hash = "#/more"; render(); } break;
+    case "csv-daily": {
+      const rows = [["date", "weight_kg", "steps", "sleep_h", "body_battery_am", "sleep_score", "training_readiness", "meals_on_plan", "protein_hit", "am_done", "notes"]];
+      for (const d of [...S.daily.values()].sort((a, z) => a.date.localeCompare(z.date))) rows.push([d.date, d.weight ?? "", d.steps ?? "", d.sleep ?? "", d.bb ?? "", d.sleepScore ?? "", d.readiness ?? "", (d.meals || []).filter(Boolean).length, d.protein ? "yes" : "", d.amDone ? "yes" : "", d.notes || ""]);
+      download(`training-daily-${todayIso()}.csv`, rows.map(r => r.map(v => /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : v).join(",")).join("\n"), "text/csv"); break;
+    }
+    case "csv-ck": {
+      const hdr = ["date", "block", "week", "avg_weight_kg", "intensity_minutes", "avg_body_battery", "avg_sleep_score", "avg_readiness", ...MEAS.map(m => m[0]), "photos", ...RATINGS, "notes"], rows = [hdr];
+      for (const c of [...S.checkins.values()].sort((a, z) => String(ckDateOf(a)).localeCompare(String(ckDateOf(z))))) {
+        const [bid, wi] = String(c.id).split("|"), b = S.blocks.get(bid), d = ckDateOf(c);
+        rows.push([d || "", b ? b.name : "", Number(wi) + 1, b ? (avgWeight(ckDates(b, Number(wi))) ?? "") && r1(avgWeight(ckDates(b, Number(wi)))) : "", c.im ?? "", ...SCORES.map(k => { const a = b ? avgField(ckDates(b, Number(wi)), k) : null; return a == null ? "" : Math.round(a); }), ...MEAS.map(([k]) => mVal(c, k) ?? ""), c.photos == null ? "" : c.photos ? "yes" : "no", ...RATINGS.map(r => c.ratings && c.ratings[r] || ""), c.notes || ""]);
+      }
+      download(`training-checkins-${todayIso()}.csv`, rows.map(r => r.map(v => /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : v).join(",")).join("\n"), "text/csv"); break;
+    }
+    case "demo": {
+      if (!(await confirmAsk("Fill the current block up to today with made-up logs, weigh-ins and check-ins? Existing entries for those days are overwritten."))) return;
+      await loadDemo(); toast("Demo data loaded"); go("#/insights"); break;
+    }
+    case "wipe": if (await confirmAsk("Delete every block, log and setting on this phone? Back up first if in doubt.")) { await clearAll(); await setMeta("seeded", true); toast("All data deleted"); go("#/more"); render(); } break;
     case "del-day": { const d = el.dataset.d; if (!(await confirmAsk(`Delete everything logged for ${fmtDate(d)}? The daily log and meals are kept.`))) return; for (const s of [...S.sets.values()]) if (s.date === d) await remove("sets", s.id); if (S.sessions.has(d)) await remove("sessions", d); render(true); break; }
     case "blk-seed": await save("blocks", normaliseBlock(clone(SEED))); render(); break;
     case "blk-new": {
@@ -811,14 +1089,14 @@ document.addEventListener("click", async e => {
       if (!r) return; const w = Math.max(1, Number(r[2]) || 6);
       const b = normaliseBlock({ id: uid("blk"), name: r[0] || "New block", startDate: r[1], weeks: [...Array(w)].map(() => ({ rir: "2" })), days: [] });
       b.nutrition = clone(viewBlock()?.nutrition || { meals: [], notes: [] });
-      await save("blocks", b); location.hash = "#/edit/" + b.id; break;
+      await save("blocks", b); go("#/edit/" + b.id); break;
     }
     case "blk-clone": {
       const src = S.blocks.get(el.dataset.id); let start = mondayOf(addDays(blockEnd(src), 1)); if (start <= blockEnd(src)) start = addDays(start, 7);
       const r = await ask("Clone block forward", [{ type: "info", text: "Copies the exercises, weeks, rules and meal plan. Logged data is not copied, but progression picks up from your history." }, { label: "Name", value: src.name.replace(/\s*\(copy\)$/, "") + " (copy)" }, { label: "Start date (Monday)", type: "date", value: start }], "Clone");
-      if (!r) return; const b = clone(src); b.id = uid("blk"); b.name = r[1]; b.startDate = r[2];
+      if (!r) return; const b = clone(src); b.id = uid("blk"); b.name = r[1]; b.startDate = r[2]; delete b.swaps;
       if (!isValidDate(b.startDate)) return toast("Start date isn't valid");
-      await save("blocks", b); toast("Block cloned"); location.hash = "#/edit/" + b.id; break;
+      await save("blocks", b); toast("Block cloned"); go("#/edit/" + b.id); break;
     }
     case "blk-export": { const b = S.blocks.get(el.dataset.id); download(`block-${b.startDate}.json`, JSON.stringify(b, null, 2)); break; }
     case "blk-import": {
@@ -839,20 +1117,55 @@ document.addEventListener("click", async e => {
       document.activeElement && document.activeElement.blur(); await new Promise(r => setTimeout(r, 30));
       const b = normaliseBlock(clone(cur.draft)), errs = validateBlock(b);
       if (errs.length) return ask("Fix these first", errs.slice(0, 8).map(t => ({ type: "info", text: t })));
-      await save("blocks", b); cur.draft = null; toast("Block saved"); location.hash = "#/blocks"; break;
+      await save("blocks", b); cur.draft = null; toast("Block saved"); go("#/blocks"); break;
     }
-    case "ed-cancel": cur.draft = null; location.hash = "#/blocks"; break;
+    case "ed-cancel": cur.draft = null; go("#/blocks"); break;
   }
 });
 function openDetails(which) { const ds = $$("#view details"); const idx = which === "meal" ? ds.length - 2 : which; if (ds[idx]) ds[idx].open = true; }
+document.addEventListener("input", e => { if (e.target.id === "cat-q") { CATS.q = e.target.value; CATS.n = 60; $("#cat-list").innerHTML = catListHtml(); } });
 document.addEventListener("pointermove", chartHover);
 document.addEventListener("pointerdown", chartHover);
 document.addEventListener("pointerleave", chartLeave, true);
 
+/* ---------- demo data (preview only) ---------- */
+async function loadDemo() {
+  const b = viewBlock(); if (!b) return;
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const end = todayIso() < blockEnd(b) ? addDays(todayIso(), -1) : blockEnd(b), start = addDays(b.startDate, -7);
+  const base = {};
+  for (let d = start, i = 0; d <= end; d = addDays(d, 1), i++) {
+    const c = ctxFor(d);
+    await save("daily", { date: d, weight: r1(92.8 - i * 0.055 + (rnd() - 0.5) * 0.6), steps: Math.round(8500 + rnd() * 4000), sleep: r1(6.5 + rnd() * 1.5), bb: Math.round(45 + rnd() * 45), sleepScore: Math.round(55 + rnd() * 35), readiness: Math.round(35 + rnd() * 55), meals: [1, 2, 3, 4, 5].map(() => rnd() > 0.1), protein: rnd() > 0.2, amDone: !!(c && c.day.amCardio && rnd() > 0.15) });
+    if (!c || c.block.id !== b.id || c.day.type !== "weights") continue;
+    const deload = c.week.deload, tgt = rirNum(c.week.rir) ?? 2;
+    for (const ex of c.day.exercises) {
+      if (base[ex.name] == null) base[ex.name] = { kg: Math.round((10 + rnd() * 50) / 2.5) * 2.5, reps: ex.repMin };
+      const bs = base[ex.name], kg = deload ? roundTo(bs.kg * 0.65, 0.5) : bs.kg;
+      let all = true;
+      for (let n = 1; n <= ex.sets; n++) {
+        const reps = Math.max(ex.repMin, Math.min(ex.repMax, bs.reps + (n === 1 ? 1 : 0) - (n > 2 ? 1 : 0) + (rnd() > 0.7 ? 1 : 0)));
+        if (reps < ex.repMax) all = false;
+        await save("sets", { id: setId(d, ex.name, "s", n), date: d, blockId: b.id, ex: ex.name, kind: "s", n, kg, reps, rir: deload ? 4 : tgt, ts: Date.now() });
+      }
+      if (!deload) { if (all) { bs.kg += bs.kg >= 40 ? 2.5 : 2; bs.reps = ex.repMin; } else bs.reps = Math.min(ex.repMax, bs.reps + 1); }
+    }
+    await save("sessions", { date: d, blockId: b.id, done: true, mins: Math.round(55 + rnd() * 25) });
+  }
+  const m0 = { neck: 41, shoulders: 124, chest: 108, waist: 95, hips: 101, armL: 39.5, armR: 40, forearmL: 31, forearmR: 31.5, thighL: 60, thighR: 60.5, calfL: 39, calfR: 39 };
+  for (let wi = 0; wi < b.weeks.length; wi++) {
+    const d = ckDate(b, wi); if (d > todayIso()) break;
+    const m = {}; for (const k in m0) m[k] = r1(m0[k] + (k === "waist" ? -0.4 * wi : k.startsWith("arm") ? 0.1 * wi : 0) + (rnd() - 0.5) * 0.4);
+    const ratings = {}; for (const r of RATINGS) ratings[r] = 2 + Math.floor(rnd() * 3);
+    await save("checkins", { id: `${b.id}|${wi}`, date: d, m, im: Math.round(120 + rnd() * 140), photos: true, ratings, notes: "" });
+  }
+}
+
 /* ---------- router ---------- */
 function render(keepScroll) {
-  const y = window.scrollY, h = location.hash.replace(/^#\/?/, "") || "today", [r, a, b] = h.split("/");
+  const y = window.scrollY, h = curHash(), [r, a, b] = h.split("/");
   const openD = keepScroll ? $$("#view details").map(d => d.open) : null;
+  if (r !== "ex" && h !== currentRoute) cur.backTo = h;
   currentRoute = h; let html = "", tab = r, title = "Training Log";
   if (r !== "edit") cur.draft = null;
   switch (r) {
@@ -864,6 +1177,8 @@ function render(keepScroll) {
     case "checkin": html = viewCheckin(a, b); title = "Check-in"; tab = "plan"; break;
     case "more": html = viewMore(); title = "More"; break;
     case "history": html = viewHistory(); title = "History"; tab = "more"; break;
+    case "catalog": html = viewCatalog(); title = "Exercises"; tab = "more"; break;
+    case "ex": html = viewExercise(decodeURIComponent(a || "")); title = "Exercise"; tab = "more"; break;
     case "blocks": html = viewBlocks(); title = "Blocks"; tab = "more"; break;
     case "edit": html = viewEdit(a); title = "Edit block"; tab = "more"; break;
     default: html = viewDay(todayIso()); tab = "today";
@@ -873,17 +1188,32 @@ function render(keepScroll) {
   if (openD) $$("#view details").forEach((d, i) => { if (openD[i]) d.open = true; });
   if (keepScroll) window.scrollTo(0, y); else window.scrollTo(0, 0);
 }
-window.addEventListener("hashchange", () => render(false));
+window.addEventListener("hashchange", () => { if (TARGET === "pwa") render(false); });
 
 /* ---------- boot ---------- */
 (async function boot() {
   try {
-    idb = await openDB(); await loadAll();
+    try { idb = await openDB(); await loadAll(); } catch (err) { idb = null; MEMORY_ONLY = true; }
     if (!meta("seeded") && SEED) { await save("blocks", normaliseBlock(clone(SEED))); await setMeta("seeded", true); }
+    if (!meta("mig-cat-links") && SEED) {
+      const L = {}; for (const d of SEED.days) for (const e of d.exercises) if (e.cat) L[e.name] = e.cat;
+      for (const b of [...S.blocks.values()]) { let ch = false; for (const d of b.days) for (const e of d.exercises) if (!e.cat && L[e.name]) { e.cat = L[e.name]; ch = true; } if (ch) await save("blocks", b); }
+      await setMeta("mig-cat-links", true);
+    }
+    if (!meta("mig-thu-checkin")) {
+      for (const b of [...S.blocks.values()]) {
+        const sun = b.days.find(d => d.dow === 7), thu = b.days.find(d => d.dow === 4);
+        if (sun && (sun.notes || []).some(n => /check-in this evening/i.test(n))) { sun.notes = sun.notes.filter(n => !/check-in this evening/i.test(n)); if (thu) { thu.notes = [...(thu.notes || []), CK_NOTE]; thu.checklist = [...(thu.checklist || []), "Check-in done"]; } }
+        b.checkinDow = b.checkinDow || 4; await save("blocks", b);
+      }
+      await setMeta("mig-thu-checkin", true);
+    }
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => { });
     render();
+    loadCat().catch(() => { });
   } catch (err) { $("#view").innerHTML = `<div class="card"><h3>Storage unavailable</h3><p class="muted">${esc(err.message || err)}</p></div>`; }
-  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(() => { });
+  if (TARGET === "pwa" && !NATIVE && "serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(() => { });
+  if (TARGET === "artifact") { $("#hdr-sub").innerHTML = '<span class="chip warn">Preview</span>'; if (window.claude && claude.use) claude.use("downloads").then(d => { DL = d; }).catch(() => { }); }
 })();
 </script>
 </body>

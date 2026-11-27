@@ -1,0 +1,10 @@
+{
+  "appId": "uk.mike.traininglog",
+  "appName": "Training Log",
+  "webDir": "www",
+  "backgroundColor": "#141414",
+  "android": {
+    "backgroundColor": "#141414",
+    "allowMixedContent": false
+  }
+}
