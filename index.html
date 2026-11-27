@@ -131,6 +131,24 @@ ul.plain{margin:6px 0 0;padding-left:18px}
 .mrow{display:grid;grid-template-columns:1fr 84px 74px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .mrow input{text-align:center;font-size:16px;padding:10px 4px}
 .mchg{text-align:right;line-height:1.3}
+.split9{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px}
+.s9{border-radius:8px;padding:6px 2px;text-align:center;font-size:11px;background:var(--surface-2)}
+.s9 span{display:block;color:var(--text-secondary);font-size:10px}
+.s9 b{display:block;font-size:12px;margin-top:2px}
+.s9.train{background:#13304f}.s9.train b{color:#9cc8f7}.s9.rest{opacity:.6}
+@media(max-width:420px){.split9{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.tsbox{background:var(--surface-2);border-radius:10px;padding:10px 12px;border-top:3px solid var(--series-1)}
+.tsbox.back{border-top-color:var(--series-2)}
+.tsbox p{margin:4px 0 0;font-size:14px}
+.tslabel{font-weight:700}
+.tsgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+@media(max-width:480px){.tsgrid{grid-template-columns:1fr}}
+details.intens{border-bottom:1px solid var(--line);padding:9px 0}
+details.intens summary{display:flex;align-items:center;gap:8px;font-weight:600;list-style:none}
+details.intens summary::-webkit-details-marker{display:none}
+details.intens summary::before{content:"+";width:18px;color:var(--series-1);font-weight:700}
+details.intens[open] summary::before{content:"−"}
+details.intens p{margin:6px 0 0 26px;font-size:14px;color:var(--text-primary)}
 .edit-ex{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;background:var(--bg)}
 .edit-ex .grid4 label.f,.edit-ex .grid3 label.f{margin-bottom:6px}
 .chk{display:flex;align-items:center;gap:8px;margin:6px 0}
@@ -676,7 +694,7 @@ function viewMore() {
   const preview = TARGET === "artifact" ? `<div class="card"><h3>Preview build</h3><p class="small">This is the development copy that runs inside Claude. ${MEMORY_ONLY ? "Storage is blocked here, so data lasts until you close it." : "Data entered here stays in this browser only, is separate from the app on your phone, and can be cleared."} Use it to try changes, not to keep your real logs.</p>
     <div class="btnrow"><button data-act="demo">Load demo data</button><button class="danger" data-act="wipe">Reset preview</button></div></div>` : "";
   const days = lb ? diffDays(todayIso(), lb.slice(0, 10)) : null;
-  return preview + `<div class="card"><h3>Exercise catalogue</h3><p class="muted small">Over 800 exercises with instructions and photos. Search by muscle or equipment.</p><a class="btn primary" href="#/catalog">Browse exercises</a></div><div class="card"><h3>Training blocks</h3><p class="muted small">Add future blocks, clone this one forward, or edit exercises and meals.</p><a class="btn primary" href="#/blocks">Manage blocks</a></div>
+  return preview + `<div class="card"><h3>Training methods</h3><p class="muted small">Warm-up rule, the 9 day split, top and back-off sets, and the intensity techniques you may use.</p><a class="btn primary" href="#/methods">Open training methods</a></div><div class="card"><h3>Exercise catalogue</h3><p class="muted small">Over 800 exercises with instructions and photos. Search by muscle or equipment.</p><a class="btn primary" href="#/catalog">Browse exercises</a></div><div class="card"><h3>Training blocks</h3><p class="muted small">Add future blocks, clone this one forward, or edit exercises and meals.</p><a class="btn primary" href="#/blocks">Manage blocks</a></div>
   <div class="card"><h3>History</h3><p class="muted small">Every logged session. Open to edit, or delete a day's log.</p><a class="btn" href="#/history">Open history</a></div>
   <div class="card"><h3>Backup</h3><p class="small ${days == null || days > 7 ? "" : "muted"}">${lb ? `Last backup ${days === 0 ? "today" : days + " days ago"}.` : "No backup yet."} Data lives on this phone only, so back up weekly.</p>
     <div class="btnrow"><button class="primary" data-act="backup">Back up now</button><button data-act="restore">Restore</button><button data-act="csv">Export sets as CSV</button><button data-act="csv-ck">Export check-ins as CSV</button><button data-act="csv-daily">Export daily log as CSV</button></div></div>
@@ -832,6 +850,40 @@ async function pickExercise({ title, intro, muscle, orig, current, scope, okLabe
 }
 function swapModal(current, orig, muscle) {
   return pickExercise({ title: `Swap ${current}`, intro: `Kit taken or broken? Sets, reps, rest and superset stay the same, and progression follows the new exercise's own history.`, muscle, orig, current, scope: true, okLabel: "Swap" });
+}
+
+/* ---------- views: training methods ---------- */
+const SPLIT = [["Push", "train"], ["Pull", "train"], ["Rest", "rest"], ["Legs", "train"], ["Rest", "rest"], ["Upper", "train"], ["Legs", "train"], ["Rest", "rest"], ["Rest", "rest"]];
+const INTENSIFIERS = [
+  ["superset", "Supersets", "Two different exercises back to back with minimal rest between them. Raises the intensity of the session and lets you target specific muscle groups more effectively."],
+  ["drop", "Drop sets", "Take a heavy weight to failure, then immediately reduce the weight and keep going. Exhausts the muscle and promotes growth."],
+  ["restpause", "Rest pause sets", "Take short breaks of 10 to 20 seconds within a set so you can perform more reps with a heavy weight. Increases overall training volume."],
+  ["giant", "Giant sets", "Like a superset, but three or more exercises in a row without rest. Very demanding, and can target several muscle groups."],
+  ["forced", "Forced reps", "A training partner helps you complete extra reps after you reach failure, extending the set beyond what you could do alone. Needs a partner."],
+  ["negatives", "Negatives (eccentric training)", "Emphasise the lowering phase of the lift, sometimes with a heavier weight than you could lift, to increase time under tension and muscle damage."],
+  ["iso", "Isometric holds", "Pause at a specific point in the movement, usually the peak contraction, to increase muscle engagement and time under tension."],
+  ["21s", "21s", "Usually for biceps curls: 7 partial reps in the lower half of the range, 7 in the upper half, then 7 full range reps."],
+  ["tut", "Time under tension", "Control the speed of every rep so the muscle works for longer. Makes a set harder without adding weight."],
+  ["preex", "Pre exhaustion", "Do an isolation exercise for a muscle before a compound exercise for the same muscle, so the target muscle fatigues first."],
+  ["bfr", "Blood flow restriction (BFR)", "Specialised cuffs or wraps limit blood flow to the working muscle. Raises metabolic stress, so lighter weights can still drive growth."],
+  ["1rm", "1 rep max testing", "Occasionally testing your 1RM on key lifts such as the squat, bench press or deadlift, to gauge progress and set training loads."],
+  ["pyramid", "Pyramid sets", "Gradually change the weight and reps from set to set, for example starting light for high reps, then adding weight and dropping reps each set."]
+];
+function viewMethods() {
+  const b = viewBlock(); const inBlock = new Set();
+  if (b) for (const d of b.days) for (const e of d.exercises) { if (/\d/.test(e.group || "")) inBlock.add("superset"); if (e.drop) inBlock.add("drop"); if (/pause/i.test(e.cue || "")) inBlock.add("iso"); if (/\d\s*s lowering|3s lowering|lowering/i.test(e.cue || "")) inBlock.add("tut"); }
+  return `<div class="card"><h2>Training methods</h2><p class="muted" style="margin:0">Reference notes on splits, top sets and the intensity techniques that may be used in future blocks.</p></div>
+  <div class="note" style="background:#4a3500;color:#ffd27a;margin:0 0 12px;padding:12px 14px;border-radius:12px;font-size:15px"><b>Always add warm-up sets.</b> All sets written in a programme are working sets. Ramp up before the first one: for example about 50% × 8, 70% × 5, 85% × 2 to 3 before your first exercise, and a feeder set before later ones. Log them in the warm-up rows.</div>
+  <div class="card"><h3>Example split: 9 day rotation</h3><p class="muted small" style="margin:0 0 8px">A hypothetical split that runs over 9 days rather than a calendar week, so the days shift each week.</p>
+    <div class="split9">${SPLIT.map(([n, t], i) => `<div class="s9 ${t}"><span>Day ${i + 1}</span><b>${n}</b></div>`).join("")}</div>
+    <p class="small muted" style="margin:8px 0 0">5 training days and 4 rest days in each 9 day cycle.</p></div>
+  <div class="card"><h3>Top sets and back-off sets</h3>
+    <div class="tsgrid"><div class="tsbox"><div class="tslabel">Top set</div><p>The heaviest, hardest set of an exercise in the session. You aim to lift the most weight, or do the toughest variation, for the target reps. It works at high intensity to drive strength and muscle gains.</p></div>
+    <div class="tsbox back"><div class="tslabel">Back-off sets</div><p>Follow the top set with a lighter weight or lower intensity, often for more reps. They add volume, fatigue the muscle further and let you practise good technique, while keeping the risk of overtraining or injury down.</p></div></div>
+    <p class="small" style="margin:10px 0 0">Together they balance heavy strength work with extra volume for muscle growth, while keeping fatigue and recovery manageable. In the app, log the top set as S1 and the back-off sets as S2 onwards.</p></div>
+  <div class="card"><h3>Intensity techniques</h3><p class="muted small" style="margin:0 0 8px">Ways to raise the intensity of a set, especially top sets. Where a technique is needed for a specific movement, it will be in that exercise's cue.${inBlock.size ? " Those marked <span class='chip good' style='font-size:11px;padding:1px 7px'>In your block</span> already feature in your current programme." : ""}</p>
+    ${INTENSIFIERS.map(([k, n, d]) => `<details class="intens"><summary><span>${esc(n)}</span>${inBlock.has(k) ? `<span class="chip good" style="font-size:11px;padding:1px 7px">In your block</span>` : ""}</summary><p>${esc(d)}</p></details>`).join("")}
+    <div class="note small" style="margin-top:10px">Use them sparingly, and keep good form and safety first. Forced reps need a partner, and 1RM attempts need a spotter or safety bars.</div></div>`;
 }
 
 /* ---------- views: catalogue ---------- */
@@ -1178,6 +1230,7 @@ function render(keepScroll) {
     case "more": html = viewMore(); title = "More"; break;
     case "history": html = viewHistory(); title = "History"; tab = "more"; break;
     case "catalog": html = viewCatalog(); title = "Exercises"; tab = "more"; break;
+    case "methods": html = viewMethods(); title = "Training methods"; tab = "more"; break;
     case "ex": html = viewExercise(decodeURIComponent(a || "")); title = "Exercise"; tab = "more"; break;
     case "blocks": html = viewBlocks(); title = "Blocks"; tab = "more"; break;
     case "edit": html = viewEdit(a); title = "Edit block"; tab = "more"; break;
